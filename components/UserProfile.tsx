@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { UserProfile as IUserProfile, Language } from '../types';
-import { getUserProfile, saveUserProfile, validatePassword } from '../services/dataService';
 import { getMeApi, updateMeApi, verifyPasswordApi, loginUserApi, exportUserDataApi, importUserDataApi } from '../services/apiClient';
 import { translations } from '../utils/translations';
 import { User, Mail, Lock, Check, Eye, EyeOff } from 'lucide-react';
@@ -38,27 +37,20 @@ export const UserProfile: React.FC<UserProfileProps> = ({ userId, lang }) => {
   const t = translations[lang];
 
   useEffect(() => {
-    const useApi = import.meta.env.VITE_USE_API === 'true';
-    if (useApi) {
-      getMeApi().then(res => {
-        try { console.log('[ui] profile.me', res) } catch {}
-        const u = res.user as any
-        const p = { username: u?.username || 'Unknown', email: u?.email || '', expiresAt: Number(u?.expiresAt || 0) }
-        setProfile(p)
-        setInitialEmail(p.email)
-      }).catch(() => setProfile(getUserProfile(userId)))
-    } else {
-      const p = getUserProfile(userId)
-      setProfile(p);
+    getMeApi().then(res => {
+      const u = res.user as any
+      const p = { username: u?.username || 'Unknown', email: u?.email || '', expiresAt: Number(u?.expiresAt || 0) }
+      setProfile(p)
       setInitialEmail(p.email)
-    }
+    }).catch(err => {
+      console.error('[UserProfile] Failed to load profile:', err)
+    })
   }, [userId]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!profile) return;
     setError('');
-    const useApi = import.meta.env.VITE_USE_API === 'true';
 
     // If changing password, validation required
     if (newPassword) {
@@ -74,34 +66,22 @@ export const UserProfile: React.FC<UserProfileProps> = ({ userId, lang }) => {
             setError(t.passwordTooShort);
             return;
         }
-        if (!useApi && !validatePassword(userId, currentPassword)) {
-            setError(t.invalidCreds);
+        try {
+            const ok = await verifyPasswordApi(currentPassword)
+            if (!ok) { setError(t.invalidCurrentPassword); return }
+        } catch {
+            setError(t.invalidCurrentPassword);
             return;
-        }
-        if (useApi) {
-            try {
-                const ok = await verifyPasswordApi(currentPassword)
-                if (!ok) { setError(t.invalidCurrentPassword); return }
-            } catch {
-                setError(t.invalidCurrentPassword);
-                return;
-            }
         }
     } else if (currentPassword) {
          // User entered current password but no new password
-         if (!useApi && !validatePassword(userId, currentPassword)) {
-             setError(t.invalidCreds);
-             return;
-         }
-         if (useApi) {
-            try {
-                const ok = await verifyPasswordApi(currentPassword)
-                if (!ok) { setError(t.invalidCurrentPassword); return }
-            } catch {
-                setError(t.invalidCurrentPassword);
-                return;
-            }
-         }
+        try {
+            const ok = await verifyPasswordApi(currentPassword)
+            if (!ok) { setError(t.invalidCurrentPassword); return }
+        } catch {
+            setError(t.invalidCurrentPassword);
+            return;
+        }
     }
     
     const updatedProfile = { ...profile };
@@ -111,7 +91,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({ userId, lang }) => {
       setError(t.invalidEmail)
       return
     }
-    if (useApi && emailWillChange && !currentPassword) {
+    if (emailWillChange && !currentPassword) {
       setError(t.currentPasswordRequired)
       return
     }
@@ -119,21 +99,16 @@ export const UserProfile: React.FC<UserProfileProps> = ({ userId, lang }) => {
       updatedProfile.password = newPassword;
     }
     try {
-      if (useApi) {
-        const u = await updateMeApi(updatedProfile.email, updatedProfile.password, currentPassword)
-        setProfile({ username: u?.username || updatedProfile.username, email: u?.email || updatedProfile.email })
-        if (newPassword) {
-          try {
-            const reauth = await loginUserApi(profile.username, newPassword)
-            if (!reauth) throw new Error('reauth_failed')
-          } catch {
-            setError(t.loadFailed || '保存失败')
-            return
-          }
+      const u = await updateMeApi(updatedProfile.email, updatedProfile.password, currentPassword)
+      setProfile({ username: u?.username || updatedProfile.username, email: u?.email || updatedProfile.email })
+      if (newPassword) {
+        try {
+          const reauth = await loginUserApi(profile.username, newPassword)
+          if (!reauth) throw new Error('reauth_failed')
+        } catch {
+          setError(t.loadFailed || '保存失败')
+          return
         }
-      } else {
-        saveUserProfile(userId, updatedProfile);
-        setProfile(updatedProfile);
       }
       setCurrentPassword('');
       setNewPassword('');

@@ -77,7 +77,8 @@ Serdo 是一个轻量级的服务器与域名一站式管理面板，适合中�
 │
 ├── services/               # 前端服务层
 │   ├── apiClient.ts        # API 请求封装（Bearer Token 认证）
-│   └── dataService.ts      # 本地模式数据读写
+│   ├── api.ts              # 核心 API 请求方法
+│   └── authService.ts      # 认证 token 管理
 │
 ├── utils/                  # 工具函数
 │   ├── translations.ts     # 多语言翻译
@@ -220,9 +221,7 @@ Serdo 是一个轻量级的服务器与域名一站式管理面板，适合中�
 
 | 变量 | 默认值 | 描述 |
 |------|--------|------|
-| `VITE_USE_API` | `false` | `true` 使用后端 API，`false` 使用本地存储 |
 | `VITE_API_BASE_URL` | `http://localhost:4000/api/v1` | API 地址，同域用 `/api/v1` |
-| `GEMINI_API_KEY` | - | (可选) AI 审计使用 |
 
 ### 后端 (.env / 环境变量)
 
@@ -416,7 +415,7 @@ interface SystemSettings {
 主应用组件，负责：
 - 路由状态管理 (`currentView`)
 - 用户认证状态 (`currentUser`)
-- 数据加载和保存（调用 `apiClient` 或 `dataService`）
+- 数据加载和保存（调用 `apiClient`）
 - 侧边导航和移动端响应式布局
 - WebSSH 终端状态管理
 

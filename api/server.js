@@ -3,13 +3,41 @@ const cors = require('cors')
 require('dotenv').config({ path: require('path').join(__dirname, '.env') })
 const { log, error } = require('./logger')
 
-const { createRouter, attachSmtpTestRoute } = require('./routes')
-const { attachSshServer } = require('./ssh')
+// 先加载必要的模块
 const { loadUserData, saveUserData } = require('./storage')
 const fs = require('fs')
 const path = require('path')
 const { fetch } = require('undici')
 const net = require('net')
+
+// 定义 addCheckLog 函数 - 必须在 require('./routes') 之前定义
+// 因为 routes.js 使用 global.addCheckLog
+function addCheckLog(userId, logEntry) {
+  try {
+    const data = loadUserData(userId)
+    const logs = data.checkLogs || []
+    const newLog = {
+      id: Date.now() + '_' + Math.random().toString(36).slice(2),
+      timestamp: Date.now(),
+      ...logEntry
+    }
+    // 保留最近100条日志
+    const updatedLogs = [newLog, ...logs].slice(0, 100)
+    saveUserData(userId, { ...data, checkLogs: updatedLogs })
+    log('Check log added', { userId, type: logEntry.type, trigger: logEntry.trigger })
+    return newLog
+  } catch (e) {
+    error('Failed to add check log', { userId, error: e.message })
+    return null
+  }
+}
+
+// 导出供 routes.js 使用
+global.addCheckLog = addCheckLog
+
+// 现在可以安全地加载 routes
+const { createRouter, attachSmtpTestRoute } = require('./routes')
+const { attachSshServer } = require('./ssh')
 
 const app = express()
 const corsEnv = String(process.env.CORS_ORIGIN || 'http://localhost:3000')
@@ -72,29 +100,6 @@ function listUserIds() {
     return files.filter(f => f.endsWith('.json')).map(f => f.replace(/\.json$/, ''))
   } catch { return [] }
 }
-
-// 检查日志记录函数
-function addCheckLog(userId, logEntry) {
-  try {
-    const data = loadUserData(userId)
-    const logs = data.checkLogs || []
-    const newLog = {
-      id: Date.now() + '_' + Math.random().toString(36).slice(2),
-      timestamp: Date.now(),
-      ...logEntry
-    }
-    // 保留最近100条日志
-    const updatedLogs = [newLog, ...logs].slice(0, 100)
-    saveUserData(userId, { ...data, checkLogs: updatedLogs })
-    return newLog
-  } catch (e) {
-    error('Failed to add check log', { userId, error: e.message })
-    return null
-  }
-}
-
-// 导出供其他模块使用
-global.addCheckLog = addCheckLog
 
 async function pingHost(ip, ports) {
   for (const p of ports) {
@@ -274,7 +279,7 @@ async function sendNotification(settings, title, body) {
         const res = await fetch(url)
         if (res.ok) {
           sent = true
-          info('Bark notification sent', { title })
+          log('Bark notification sent', { title })
         } else {
           error('Bark notification failed', { status: res.status })
         }
@@ -288,7 +293,7 @@ async function sendNotification(settings, title, body) {
         const transporter = nodemailer.createTransport({ host: smtp.host, port: Number(smtp.port || 587), secure: false, auth: { user: smtp.username, pass: smtp.password } })
         await transporter.sendMail({ from: smtp.fromEmail || smtp.username, to: smtp.fromEmail || smtp.username, subject: title, text: body })
         sent = true
-        info('Email notification sent', { title })
+        log('Email notification sent', { title })
       } catch (e) {
         error('Email notification error', { error: e.message })
       }

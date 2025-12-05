@@ -2,12 +2,12 @@
 
 ## 项目结构
 - 前端: 见 `docs/ProjectSummary.md` 的架构与组件清单
-- 后端: `api/` 目录，Express + TypeScript，文件存储
+- 后端: `api/` 目录，Express + JavaScript，SQLite/JSON 文件存储
 
 ## 开发环境
 - 前端: `npm run dev` 启动 Vite，端口 `3000`
-- 后端: `npm run dev` 启动 API，端口 `4000`
-- 通过 `.env.local` 设置 `VITE_USE_API` 控制数据源
+- 后端: `cd api && node server.js` 启动 API，端口 `4000`
+- 前端通过 `VITE_API_BASE_URL` 指定后端地址
 
 ## 接口约定（RESTful /api/v1）
 - 认证
@@ -28,7 +28,7 @@
 
 ## 测试与联调建议
 - 后端: 使用 `curl` 或 `REST Client` 验证接口
-- 前端: 将 `VITE_USE_API=true`，登录后进行 CRUD 操作验证
+- 前端: 配置 `VITE_API_BASE_URL`，登录后进行 CRUD 操作验证
 - 建议增加端到端测试（`Playwright`/`Cypress`），覆盖登录、CRUD、设置、审计
 
 ## 部署与 CI/CD（建议）

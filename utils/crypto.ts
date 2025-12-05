@@ -1,113 +1,134 @@
-export const b64ToBytes = (b64: string) => {
+/**
+ * 加密工具 - 使用 WebCrypto API 进行 AES-256-GCM 加解密
+ * 
+ * 用途：
+ * 1. 解密从服务器获取的敏感数据（密码等）
+ * 2. 所有加密在服务器端完成，前端只负责解密
+ */
+
+/**
+ * Base64 解码为字节数组
+ */
+export function b64ToBytes(b64: string): Uint8Array {
   try {
-    return Uint8Array.from(atob(b64), c => c.charCodeAt(0))
-  } catch (error) {
-    console.error('❌ [b64ToBytes] Base64 解码失败:', error)
-    throw new Error('Invalid base64 string')
+    const binaryString = atob(b64)
+    const bytes = new Uint8Array(binaryString.length)
+    for (let i = 0; i < binaryString.length; i++) {
+      bytes[i] = binaryString.charCodeAt(i)
+    }
+    return bytes
+  } catch {
+    throw new Error('Base64 解码失败')
   }
 }
 
-export const bytesToB64 = (buf: ArrayBuffer) => {
-  try {
-    const u8 = new Uint8Array(buf)
-    let s = ''
-    for (let i = 0; i < u8.length; i++) s += String.fromCharCode(u8[i])
-    return btoa(s)
-  } catch (error) {
-    console.error('❌ [bytesToB64] Base64 编码失败:', error)
-    throw new Error('Failed to encode to base64')
+/**
+ * 字节数组编码为 Base64
+ */
+export function bytesToB64(buf: ArrayBuffer): string {
+  const bytes = new Uint8Array(buf)
+  let binary = ''
+  for (let i = 0; i < bytes.length; i++) {
+    binary += String.fromCharCode(bytes[i])
   }
+  return btoa(binary)
 }
 
-export async function aesGcmDecryptBase64(keyB64: string, ivB64: string, tagB64: string, dataB64: string): Promise<string> {
-  console.log('🔓 [Decrypt] 开始解密:', {
-    keyLength: keyB64?.length || 0,
-    ivLength: ivB64?.length || 0,
-    tagLength: tagB64?.length || 0,
-    dataLength: dataB64?.length || 0
-  })
+/**
+ * 加密数据结构
+ */
+export interface EncryptedData {
+  iv: string    // 初始化向量 (Base64)
+  tag: string   // 认证标签 (Base64)
+  data: string  // 加密数据 (Base64)
+}
+
+/**
+ * 解密 AES-256-GCM 加密的数据
+ * 
+ * @param keyB64 - Base64 编码的 256 位密钥
+ * @param encrypted - 加密数据对象
+ * @returns 解密后的明文字符串
+ */
+export async function decryptSecret(
+  keyB64: string,
+  encrypted: EncryptedData
+): Promise<string> {
+  // 验证输入
+  if (!keyB64 || !encrypted.iv || !encrypted.tag || !encrypted.data) {
+    throw new Error('解密参数不完整')
+  }
   
   try {
-    // 验证输入参数
-    if (!keyB64 || !ivB64 || !tagB64 || !dataB64) {
-      const missing = []
-      if (!keyB64) missing.push('key')
-      if (!ivB64) missing.push('iv')
-      if (!tagB64) missing.push('tag')
-      if (!dataB64) missing.push('data')
-      throw new Error(`Missing parameters: ${missing.join(', ')}`)
+    // 解码所有 Base64 数据
+    const keyBytes = b64ToBytes(keyB64)
+    const iv = b64ToBytes(encrypted.iv)
+    const tag = b64ToBytes(encrypted.tag)
+    const data = b64ToBytes(encrypted.data)
+    
+    // 验证密钥长度（256 位 = 32 字节）
+    if (keyBytes.length !== 32) {
+      throw new Error(`密钥长度错误: ${keyBytes.length} 字节，需要 32 字节`)
     }
     
-    // 解码 Base64
-    const keyRaw = b64ToBytes(keyB64)
-    const iv = b64ToBytes(ivB64)
-    const tag = b64ToBytes(tagB64)
-    const data = b64ToBytes(dataB64)
-    
-    console.log('🔓 [Decrypt] Base64 解码成功:', {
-      keyBytes: keyRaw.length,
-      ivBytes: iv.length,
-      tagBytes: tag.length,
-      dataBytes: data.length
-    })
-    
-    // 验证密钥长度
-    if (keyRaw.length !== 32) {
-      throw new Error(`Invalid key length: ${keyRaw.length}, expected 32 bytes`)
-    }
-    
-    // 合并数据和标签
+    // 合并数据和认证标签（WebCrypto 需要）
     const combined = new Uint8Array(data.length + tag.length)
     combined.set(data)
     combined.set(tag, data.length)
     
     // 导入密钥
     const cryptoKey = await crypto.subtle.importKey(
-      'raw', 
-      keyRaw, 
-      { name: 'AES-GCM' }, 
-      false, 
+      'raw',
+      keyBytes,
+      { name: 'AES-GCM' },
+      false,
       ['decrypt']
     )
     
-    console.log('🔓 [Decrypt] 密钥导入成功，开始解密...')
-    
     // 解密
-    const pt = await crypto.subtle.decrypt(
-      { name: 'AES-GCM', iv }, 
-      cryptoKey, 
+    const decrypted = await crypto.subtle.decrypt(
+      { name: 'AES-GCM', iv },
+      cryptoKey,
       combined
     )
     
     // 转换为字符串
-    const u8 = new Uint8Array(pt)
-    let s = ''
-    for (let i = 0; i < u8.length; i++) s += String.fromCharCode(u8[i])
-    
-    console.log('✅ [Decrypt] 解密成功，长度:', s.length)
-    
-    // 验证结果不为空
-    if (!s || s.trim() === '') {
-      console.warn('⚠️ [Decrypt] 解密结果为空字符串')
+    const decoder = new TextDecoder()
+    return decoder.decode(decrypted)
+  } catch (error) {
+    if (error instanceof Error) {
+      if (error.name === 'OperationError') {
+        throw new Error('解密失败：密钥不匹配或数据已损坏')
+      }
+      throw error
     }
-    
-    return s
-  } catch (error: any) {
-    console.error('❌ [Decrypt] 解密失败:', {
-      error: error.message,
-      name: error.name,
-      stack: error.stack
-    })
-    
-    // 提供更友好的错误信息
-    if (error.name === 'OperationError') {
-      throw new Error('解密失败：密钥不匹配或数据已损坏')
-    } else if (error.message.includes('base64')) {
-      throw new Error('解密失败：数据格式错误')
-    } else if (error.message.includes('key length')) {
-      throw new Error('解密失败：密钥长度错误')
-    }
-    
-    throw error
+    throw new Error('解密失败')
   }
+}
+
+/**
+ * 用于兼容旧代码的别名
+ * @deprecated 请使用 decryptSecret
+ */
+export async function aesGcmDecryptBase64(
+  keyB64: string,
+  ivB64: string,
+  tagB64: string,
+  dataB64: string
+): Promise<string> {
+  return decryptSecret(keyB64, { iv: ivB64, tag: tagB64, data: dataB64 })
+}
+
+/**
+ * 生成随机字节（用于生成密钥）
+ */
+export function generateRandomBytes(length: number): Uint8Array {
+  return crypto.getRandomValues(new Uint8Array(length))
+}
+
+/**
+ * 生成 Base64 编码的随机密钥
+ */
+export function generateRandomKey(bytes = 32): string {
+  return bytesToB64(generateRandomBytes(bytes).buffer)
 }

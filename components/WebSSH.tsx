@@ -17,106 +17,193 @@ interface WebSSHProps {
 
 export const WebSSH: React.FC<WebSSHProps> = ({ server, onClose, isMinimized, onToggleMinimize, lang }) => {
   const [isMaximized, setIsMaximized] = useState(false);
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isReady, setIsReady] = useState(false); // 终端是否已初始化
   const termContainerRef = useRef<HTMLDivElement>(null);
   const wsRef = useRef<WebSocket | null>(null);
   const termRef = useRef<XTerm | null>(null);
   const fitRef = useRef<FitAddon | null>(null);
+  const isDisposedRef = useRef(false);
   const t = translations[lang];
 
-  const sendResize = () => {
-    try { fitRef.current?.fit() } catch {}
-    if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN && termRef.current) {
-      const cols = termRef.current.cols || 120;
-      const rows = termRef.current.rows || 35;
-      try { wsRef.current.send(JSON.stringify({ type: 'resize', cols, rows })) } catch {}
+  // 安全地调用 fit()
+  const safeFit = () => {
+    if (isDisposedRef.current || !isReady) return;
+    if (!fitRef.current || !termRef.current) return;
+    const container = termContainerRef.current;
+    if (!container || container.offsetWidth < 10 || container.offsetHeight < 10) return;
+    
+    try {
+      fitRef.current.fit();
+    } catch {
+      // 静默忽略
     }
   };
 
-  useEffect(() => {
-    const useApi = import.meta.env.VITE_USE_API === 'true';
-    if (!useApi) return;
-    const base = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000/api/v1') as string;
-    const token = localStorage.getItem('infravault_token') || '';
-    const url = base.replace(/^http/, 'ws') + `/ssh?token=${encodeURIComponent(token)}&serverId=${encodeURIComponent(server.id)}`;
-
-    const term = new XTerm({
-      fontFamily: 'Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
-      fontSize: 13,
-      theme: { background: '#000000', foreground: '#10b981' },
-      cursorBlink: true,
-      cursorStyle: 'block',
-      cols: 120,
-      rows: 35
-    });
-    const fit = new FitAddon();
-    term.loadAddon(fit);
-    termRef.current = term;
-    fitRef.current = fit;
-    if (termContainerRef.current) {
-      term.open(termContainerRef.current);
-      try { fit.fit() } catch {}
-      term.focus();
-      setTimeout(() => { try { fitRef.current?.fit() } catch {}; sendResize(); }, 50);
-    }
-
-    const ws = new WebSocket(url);
-    wsRef.current = ws;
-    ws.onopen = () => term.write(`\r\n${t.connecting} ${server.ip}:${server.sshPort || '22'}\r\n`);
-    ws.onmessage = (ev) => {
+  const sendResize = () => {
+    if (isDisposedRef.current || !isReady) return;
+    safeFit();
+    if (wsRef.current?.readyState === WebSocket.OPEN && termRef.current) {
       try {
-        const obj = JSON.parse(ev.data);
-        if (obj.type === 'output' && typeof obj.data === 'string') term.write(obj.data);
-        if (obj.type === 'status') term.write(`\r\n${t.connected}\r\n`);
-        if (obj.type === 'error') term.write(`\r\nError: ${obj.message}\r\n`);
+        wsRef.current.send(JSON.stringify({ 
+          type: 'resize', 
+          cols: termRef.current.cols || 120, 
+          rows: termRef.current.rows || 35 
+        }));
       } catch {}
+    }
+  };
+
+  // 主初始化 effect
+  useEffect(() => {
+    isDisposedRef.current = false;
+    setIsReady(false);
+    
+    const container = termContainerRef.current;
+    if (!container) return;
+
+    // 等待容器有足够尺寸后再初始化终端
+    const initTerminal = () => {
+      if (isDisposedRef.current) return;
+      if (container.offsetWidth < 10 || container.offsetHeight < 10) {
+        // 容器尺寸不足，延迟重试
+        setTimeout(initTerminal, 50);
+        return;
+      }
+
+      const base = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000/api/v1') as string;
+      const token = localStorage.getItem('serdo_auth_token') || '';
+      const url = base.replace(/^http/, 'ws') + `/ssh?token=${encodeURIComponent(token)}&serverId=${encodeURIComponent(server.id)}`;
+
+      // 创建终端
+      const term = new XTerm({
+        fontFamily: 'Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+        fontSize: 13,
+        theme: { background: '#000000', foreground: '#10b981' },
+        cursorBlink: true,
+        cursorStyle: 'block',
+        cols: 120,
+        rows: 35,
+        allowProposedApi: true, // 允许实验性 API
+      });
+      
+      const fit = new FitAddon();
+      term.loadAddon(fit);
+      termRef.current = term;
+      fitRef.current = fit;
+
+      // 打开终端
+      try {
+        term.open(container);
+      } catch (e) {
+        console.error('[WebSSH] Failed to open terminal:', e);
+        return;
+      }
+
+      // 标记为已就绪
+      setIsReady(true);
+
+      // 延迟 fit 和 focus
+      setTimeout(() => {
+        if (isDisposedRef.current) return;
+        try {
+          fit.fit();
+          term.focus();
+        } catch {}
+      }, 100);
+
+      // 建立 WebSocket 连接
+      const ws = new WebSocket(url);
+      wsRef.current = ws;
+      
+      ws.onopen = () => {
+        if (isDisposedRef.current) return;
+        try { term.write(`\r\n${t.connecting} ${server.ip}:${server.sshPort || '22'}\r\n`); } catch {}
+      };
+      
+      ws.onmessage = (ev) => {
+        if (isDisposedRef.current) return;
+        try {
+          const obj = JSON.parse(ev.data);
+          if (obj.type === 'output' && typeof obj.data === 'string') term.write(obj.data);
+          else if (obj.type === 'status') term.write(`\r\n${t.connected}\r\n`);
+          else if (obj.type === 'error') term.write(`\r\nError: ${obj.message}\r\n`);
+        } catch {}
+      };
+      
+      ws.onclose = () => {
+        if (isDisposedRef.current) return;
+        try { term.write(`\r\n${t.disconnected || 'Disconnected'}\r\n`); } catch {}
+      };
+      
+      term.onData((data) => {
+        if (isDisposedRef.current) return;
+        if (wsRef.current?.readyState === WebSocket.OPEN) {
+          try { wsRef.current.send(JSON.stringify({ type: 'input', data })); } catch {}
+        }
+      });
     };
-    ws.onclose = () => term.write(`\r\n${t.disconnected || 'Disconnected'}\r\n`);
-    term.onData((data) => {
-      if (!wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) return;
-      wsRef.current.send(JSON.stringify({ type: 'input', data }));
+
+    // 使用 requestAnimationFrame 确保 DOM 已渲染
+    requestAnimationFrame(() => {
+      if (!isDisposedRef.current) initTerminal();
     });
+
+    // 窗口 resize 处理
     const onResize = () => {
-      try { fitRef.current?.fit() } catch {}
-      if (!wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) return;
-      const dims = termRef.current;
-      const cols = dims?.cols || 120;
-      const rows = dims?.rows || 35;
-      wsRef.current.send(JSON.stringify({ type: 'resize', cols, rows }));
+      if (!isDisposedRef.current && isReady) sendResize();
     };
     window.addEventListener('resize', onResize);
-    try { onResize() } catch {}
+
     return () => {
+      isDisposedRef.current = true;
+      setIsReady(false);
       window.removeEventListener('resize', onResize);
-      try { ws.close() } catch {}
-      try { term.dispose() } catch {}
+      try { wsRef.current?.close(); } catch {}
+      try { termRef.current?.dispose(); } catch {}
+      termRef.current = null;
+      fitRef.current = null;
+      wsRef.current = null;
     };
   }, [server.id]);
 
+  // ResizeObserver
   useEffect(() => {
-    const R: any = (window as any).ResizeObserver;
-    if (!R) return;
-    const ro = new R(() => { sendResize() });
-    if (termContainerRef.current) ro.observe(termContainerRef.current);
-    return () => { try { ro.disconnect() } catch {} };
-  }, []);
+    const R = (window as any).ResizeObserver;
+    if (!R || !termContainerRef.current) return;
+    
+    const ro = new R(() => {
+      if (!isDisposedRef.current && isReady) {
+        // 使用 requestAnimationFrame 避免同步调用
+        requestAnimationFrame(sendResize);
+      }
+    });
+    ro.observe(termContainerRef.current);
+    return () => { try { ro.disconnect(); } catch {} };
+  }, [isReady]);
 
+  // 从最小化恢复
   useEffect(() => {
-    if (isMinimized) return;
-    if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-  });
-
-  useEffect(() => {
-    if (!isMinimized) {
-      sendResize();
-      try { termRef.current?.focus() } catch {}
+    if (!isMinimized && isReady && !isDisposedRef.current) {
+      setTimeout(() => {
+        if (!isDisposedRef.current) {
+          sendResize();
+          try { termRef.current?.focus(); } catch {}
+        }
+      }, 100);
     }
-  }, [isMinimized]);
+  }, [isMinimized, isReady]);
 
+  // 最大化切换
   useEffect(() => {
-    sendResize();
-    try { termRef.current?.focus() } catch {}
-  }, [isMaximized]);
+    if (isReady && !isDisposedRef.current) {
+      setTimeout(() => {
+        if (!isDisposedRef.current) {
+          sendResize();
+          try { termRef.current?.focus(); } catch {}
+        }
+      }, 100);
+    }
+  }, [isMaximized, isReady]);
 
   const minimizedBadge = (
     <div 
@@ -157,7 +244,7 @@ export const WebSSH: React.FC<WebSSHProps> = ({ server, onClose, isMinimized, on
         </div>
 
         {/* Terminal Body */}
-        <div ref={scrollRef} className="flex-1 bg-black p-2 overflow-hidden">
+        <div className="flex-1 bg-black p-2 overflow-hidden">
           <div ref={termContainerRef} className="h-full w-full" tabIndex={0} onClick={() => { try { termRef.current?.focus() } catch {} }} />
         </div>
       </div>

@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { SystemSettings as ISystemSettings, Language } from '../types';
-import { getSystemSettings, saveSystemSettings } from '../services/dataService';
 import { getSettingsApi, updateSettingsApi } from '../services/apiClient';
 import { translations } from '../utils/translations';
 import { showToast, showOverlay, hideOverlay } from '../utils/notify';
@@ -84,21 +83,17 @@ export const SystemSettings: React.FC<SystemSettingsProps> = ({ userId, lang, on
   }
 
   useEffect(() => {
-    const useApi = import.meta.env.VITE_USE_API === 'true';
-    if (useApi) {
-      (async () => {
+    (async () => {
+      try {
         const s = await getSettingsApi();
         const ns = normalizeSettings(s);
         setSettings(ns);
         try { setHeadersText(JSON.stringify(ns.whoisApiHeaders || {}, null, 2)); } catch { setHeadersText('{}') }
         try { setBodyText(String(ns.whoisApiBody || '')); } catch { setBodyText('') }
-      })();
-    } else {
-      const ns = normalizeSettings(getSystemSettings(userId));
-      setSettings(ns);
-      try { setHeadersText(JSON.stringify(ns.whoisApiHeaders || {}, null, 2)); } catch { setHeadersText('{}') }
-      try { setBodyText(String(ns.whoisApiBody || '')); } catch { setBodyText('') }
-    }
+      } catch (err) {
+        console.error('[SystemSettings] Failed to load settings:', err);
+      }
+    })();
   }, [userId]);
 
   useEffect(() => {
@@ -108,7 +103,6 @@ export const SystemSettings: React.FC<SystemSettingsProps> = ({ userId, lang, on
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!settings) return;
-    const useApi = import.meta.env.VITE_USE_API === 'true';
     const s = settings as any;
     const smtp = s.notifications?.smtp || ({} as any);
     const bark = s.notifications?.bark || ({} as any);
@@ -179,22 +173,12 @@ export const SystemSettings: React.FC<SystemSettingsProps> = ({ userId, lang, on
     
     try {
       showOverlay(lang==='zh' ? '正在保存设置…' : 'Saving settings…')
-      if (useApi) {
-        const updatedFromApi = await updateSettingsApi(saveData);
-        setSaved(true);
-        setTimeout(() => setSaved(false), 2000);
-        // 通知 App 组件更新 settings，使用 API 返回的最新数据
-        if (onSettingsChange && updatedFromApi) {
-          onSettingsChange(updatedFromApi);
-        }
-      } else {
-        saveSystemSettings(userId, saveData);
-        setSaved(true);
-        setTimeout(() => setSaved(false), 2000);
-        // 通知 App 组件更新 settings
-        if (onSettingsChange) {
-          onSettingsChange(saveData);
-        }
+      const updatedFromApi = await updateSettingsApi(saveData);
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+      // 通知 App 组件更新 settings，使用 API 返回的最新数据
+      if (onSettingsChange && updatedFromApi) {
+        onSettingsChange(updatedFromApi);
       }
       showToast(lang==='zh' ? '已保存' : 'Saved', 'success')
       hideOverlay()
@@ -998,15 +982,13 @@ const ImmediateServerCheck: React.FC<{ lang: Language }> = ({ lang }) => {
   const [open, setOpen] = useState(false)
   const [results, setResults] = useState<{ id: string, name: string, reachable: boolean }[]>([])
   const t = translations[lang]
-  const useApi = import.meta.env.VITE_USE_API === 'true'
   const run = async () => {
-    if (!useApi) return
     setLoading(true)
     setOpen(false)
     setProgress(0)
     const timer = setInterval(() => setProgress(p => (p < 90 ? p + 10 : p)), 200)
     try {
-      const res = await (await fetch((import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000/api/v1') + '/servers/check', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('infravault_token') || ''}` }, body: JSON.stringify({}) })).json()
+      const res = await (await fetch((import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000/api/v1') + '/servers/check', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('serdo_auth_token') || ''}` }, body: JSON.stringify({}) })).json()
       setResults(res.results || [])
       setOpen(true)
     } finally { setLoading(false) }
@@ -1015,7 +997,7 @@ const ImmediateServerCheck: React.FC<{ lang: Language }> = ({ lang }) => {
   }
   return (
     <div className="space-y-2">
-      <button disabled={!useApi || loading} onClick={run} type="button" className="px-3 py-2 bg-indigo-600 text-white rounded-lg disabled:opacity-50">
+      <button disabled={loading} onClick={run} type="button" className="px-3 py-2 bg-indigo-600 text-white rounded-lg disabled:opacity-50">
         {loading ? t.checking : t.checkServersNow}
       </button>
       {loading && (
@@ -1023,7 +1005,6 @@ const ImmediateServerCheck: React.FC<{ lang: Language }> = ({ lang }) => {
           <div className="h-2 bg-indigo-600 transition-all" style={{ width: `${progress}%` }}></div>
         </div>
       )}
-      {!useApi && <div className="text-xs text-slate-500">{t.apiModeRequired}</div>}
       {open && (
         <ResultsModal title={t.checkServersNow} onClose={() => setOpen(false)}>
           {results.map(r => (
@@ -1044,15 +1025,13 @@ const ImmediateDomainCheck: React.FC<{ lang: Language }> = ({ lang }) => {
   const [open, setOpen] = useState(false)
   const [results, setResults] = useState<{ id: string, name: string, ok: boolean, expirationDate?: string }[]>([])
   const t = translations[lang]
-  const useApi = import.meta.env.VITE_USE_API === 'true'
   const run = async () => {
-    if (!useApi) return
     setLoading(true)
     setOpen(false)
     setProgress(0)
     try {
       const BASE = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000/api/v1')
-      const headers = { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('infravault_token') || ''}` }
+      const headers = { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('serdo_auth_token') || ''}` }
       const domains = await (await fetch(`${BASE}/domains`, { headers })).json()
       const total = Array.isArray(domains) ? domains.length : 0
       const out: { id: string, name: string, ok: boolean, expirationDate?: string }[] = []
@@ -1073,7 +1052,7 @@ const ImmediateDomainCheck: React.FC<{ lang: Language }> = ({ lang }) => {
   }
   return (
     <div className="space-y-2">
-      <button disabled={!useApi || loading} onClick={run} type="button" className="px-3 py-2 bg-indigo-600 text-white rounded-lg disabled:opacity-50">
+      <button disabled={loading} onClick={run} type="button" className="px-3 py-2 bg-indigo-600 text-white rounded-lg disabled:opacity-50">
         {loading ? t.checking : t.checkDomainsNow}
       </button>
       {loading && (
@@ -1081,7 +1060,6 @@ const ImmediateDomainCheck: React.FC<{ lang: Language }> = ({ lang }) => {
           <div className="h-2 bg-indigo-600 transition-all" style={{ width: `${progress}%` }}></div>
         </div>
       )}
-      {!useApi && <div className="text-xs text-slate-500">{t.apiModeRequired}</div>}
       {open && (
         <ResultsModal title={t.checkDomainsNow} onClose={() => setOpen(false)}>
           {results.map(r => (
@@ -1152,9 +1130,7 @@ const SmtpTestButton: React.FC<{ settings: ISystemSettings, lang: Language, setS
   const [result, setResult] = useState<string>('')
   const [testTo, setTestTo] = useState(settings.notifications.smtp.fromEmail || '')
   const t = translations[lang]
-  const useApi = import.meta.env.VITE_USE_API === 'true'
   const run = async () => {
-    if (!useApi) { setResult(t.apiModeRequired); setOpen(true); return }
     setLoading(true)
     setOpen(false)
     try {
@@ -1162,7 +1138,7 @@ const SmtpTestButton: React.FC<{ settings: ISystemSettings, lang: Language, setS
       const ts = new Date().toISOString().replace('T',' ').slice(0,19)
       const subject = 'Serdo SMTP Test'
       const bodyText = `这是一封来自 Serdo 的 SMTP 测试邮件。发送时间：${ts}`
-      const res = await fetch(`${BASE}/notifications/smtp/test`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('infravault_token') || ''}` }, body: JSON.stringify({ smtp: settings.notifications.smtp, to: testTo || settings.notifications.smtp.fromEmail, subject, body: bodyText }) })
+      const res = await fetch(`${BASE}/notifications/smtp/test`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('serdo_auth_token') || ''}` }, body: JSON.stringify({ smtp: settings.notifications.smtp, to: testTo || settings.notifications.smtp.fromEmail, subject, body: bodyText }) })
       let detail = ''
       try { 
         const j = await res.json(); 

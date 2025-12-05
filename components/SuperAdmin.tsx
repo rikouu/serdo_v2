@@ -32,7 +32,7 @@ export const SuperAdmin: React.FC<{ lang: Language }> = ({ lang }) => {
   }
   useEffect(() => { loadAll() }, [])
 
-  const saveSettings = async () => { setSaving(true); try { await updateAdminSettingsApi(appName, inviteRequired); showBanner(lang==='zh' ? '已保存' : 'Saved', 'success') } catch { showBanner(lang==='zh' ? '保存失败' : 'Save failed', 'error') } finally { setSaving(false) } }
+  const saveSettings = async () => { setSaving(true); try { await updateAdminSettingsApi({ appName, inviteRequired }); showBanner(lang==='zh' ? '已保存' : 'Saved', 'success') } catch { showBanner(lang==='zh' ? '保存失败' : 'Save failed', 'error') } finally { setSaving(false) } }
   const genInvites = async () => {
     try {
       const expiresAt = genExpiry ? new Date(genExpiry).getTime() : 0

@@ -52,7 +52,7 @@ export const AutoCheckStatus: React.FC<AutoCheckStatusProps> = ({ lang }) => {
     try {
       const BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000/api/v1';
       const headers = {
-        'Authorization': `Bearer ${localStorage.getItem('infravault_token')}`,
+        'Authorization': `Bearer ${localStorage.getItem('serdo_auth_token')}`,
         'Content-Type': 'application/json'
       };
 

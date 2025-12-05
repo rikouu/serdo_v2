@@ -2,8 +2,8 @@
 
 ## 登录与注册
 - 打开前端页面，选择语言后可直接登录或注册
-- 本地演示账号: `admin/admin`
-- API 模式下，注册信息与数据持久化到后端 `api/data/`
+- 默认管理员账号: `admin/admin`
+- 注册信息与数据持久化到后端 `api/data/`
 
 ## 数据管理
 - 服务器: 新增、编辑、删除，支持展示 SSH 信息
@@ -12,14 +12,25 @@
 - 系统设置: 配置 DNS 提供商与通知（Bark/SMTP）
 
 ## AI 审计
-- 前端本地模式: 需在 `.env.local` 配置 `GEMINI_API_KEY`，按钮触发生成 Markdown 报告
-- API 模式: 由后端生成基础审计报告（示例），返回并展示
+- 由后端生成审计报告，展示在 Dashboard 中
 
 ## WebSSH
-- 当前为前端模拟窗口，未连接真实 SSH
-- API 规划包含 WebSocket 通道，未来可替换为真实后端代理
+- 点击服务器的 SSH 图标可打开 WebSSH 终端
+- 通过 WebSocket 连接后端 SSH 服务
 
-## 切换数据源
-- 通过 `.env.local` 的 `VITE_USE_API` 切换：
-  - `true`: 使用后端 API，登录/注册/CRUD/设置均走网络
-  - `false`: 使用浏览器 `localStorage`，适合离线演示
+## 配置说明
+
+### 前端环境变量 (`.env.local`)
+
+| 变量 | 默认值 | 说明 |
+|------|--------|------|
+| `VITE_API_BASE_URL` | `http://localhost:4000/api/v1` | API 地址 |
+
+### 后端环境变量 (`api/.env`)
+
+| 变量 | 默认值 | 说明 |
+|------|--------|------|
+| `AUTH_SECRET` | - | JWT 签名密钥（必须设置） |
+| `PORT` | `4000` | 服务监听端口 |
+| `CORS_ORIGIN` | `*` | 允许的前端来源 |
+| `REDACT_MODE` | `false` | 生产环境建议 `true` |

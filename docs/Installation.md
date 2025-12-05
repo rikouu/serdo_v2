@@ -7,9 +7,7 @@
 - 依赖要求: Node.js >= 16
 - 先复制环境文件: 将 `.env.example` 复制为 `.env.local`
 - 配置变量:
-  - `VITE_USE_API=true` 启用后端 API 模式；`false` 使用本地存储
-  - `VITE_API_BASE_URL=http://localhost:4000/api/v1` 指向后端
-  - `GEMINI_API_KEY=<你的Gemini密钥>` 用于本地 AI 审计（API 模式下由后端处理则可留空）
+  - `VITE_API_BASE_URL=http://localhost:4000/api/v1` 指向后端 API 地址
 - 安装依赖并启动:
   - `npm install`
   - `npm run dev`

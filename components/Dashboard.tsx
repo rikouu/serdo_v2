@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { Server, Domain, ViewState, Language, SystemSettings } from '../types';
-import { getSystemSettings } from '../services/dataService';
 import { getSettingsApi } from '../services/apiClient';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip as RechartsTooltip, Legend, BarChart, Bar, XAxis, YAxis } from 'recharts';
 import { AlertTriangle, Server as ServerIcon, Globe, ShieldCheck, XCircle, ArrowRight } from 'lucide-react';
@@ -93,10 +92,9 @@ export const Dashboard: React.FC<DashboardProps> = ({ servers, domains, lang, on
   const domInner = Math.round(domOuter * 0.6);
 
   useEffect(() => {
-    const useApi = import.meta.env.VITE_USE_API === 'true';
     (async () => {
       try {
-        const s = useApi ? await getSettingsApi() : (userId ? getSystemSettings(userId) : null);
+        const s = await getSettingsApi();
         if (s) setSettings(s as any);
       } catch {}
     })();

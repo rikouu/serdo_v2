@@ -687,21 +687,24 @@ export const DomainList: React.FC<DomainListProps> = ({ domains, servers, provid
                   <div className="absolute inset-0 rounded-xl pointer-events-none shadow-[0_0_40px_rgba(79,70,229,0.35)]" />
                 </>
               )}
-              <div className="flex items-start justify-between">
-                <div className="flex items-center gap-2 min-w-0">
-                  <DragHandle {...dragHandleProps} className="flex-shrink-0 -ml-1" />
-                  <input type="checkbox" className="w-4 h-4" checked={checked} onChange={e => setSelected(prev => ({ ...prev, [domain.id]: e.target.checked }))} />
-                  <div className="font-semibold text-slate-900 flex items-center gap-2 min-w-0">
-                    {isSyncing ? (
-                      <Loader2 className="w-4 h-4 text-indigo-500 animate-spin"/>
-                    ) : (
-                      <Globe className="w-4 h-4 text-slate-400"/>
-                    )}
-                    <span className="cursor-pointer hover:underline truncate max-w-[50vw] md:max-w-[16rem]" onClick={(e) => { e.stopPropagation(); setViewingDomain(domain); setIsViewFlipped(false); }}>{domain.name}</span>
-                    <span className={`flex-shrink-0 text-[10px] px-1.5 py-0.5 rounded ${getStateBadgeClass(domain.state)}`}>{t[('state_' + (domain.state || 'unknown')) as keyof typeof t]}</span>
-                  </div>
+              {/* 第一行：域名名称 */}
+              <div className="flex items-center gap-2 min-w-0">
+                <DragHandle {...dragHandleProps} className="flex-shrink-0 -ml-1" />
+                <input type="checkbox" className="w-4 h-4 flex-shrink-0" checked={checked} onChange={e => setSelected(prev => ({ ...prev, [domain.id]: e.target.checked }))} />
+                <div className="font-semibold text-slate-900 flex items-center gap-2 min-w-0 flex-1">
+                  {isSyncing ? (
+                    <Loader2 className="w-4 h-4 text-indigo-500 animate-spin flex-shrink-0"/>
+                  ) : (
+                    <Globe className="w-4 h-4 text-slate-400 flex-shrink-0"/>
+                  )}
+                  <span className="cursor-pointer hover:underline truncate" onClick={(e) => { e.stopPropagation(); setViewingDomain(domain); setIsViewFlipped(false); }}>{domain.name}</span>
                 </div>
-                <div className="flex items-center gap-1">
+              </div>
+              
+              {/* 第二行：状态徽章 + 操作按钮 */}
+              <div className="flex items-center justify-between -mt-1">
+                <span className={`flex-shrink-0 text-[10px] px-1.5 py-0.5 rounded ${getStateBadgeClass(domain.state)}`}>{t[('state_' + (domain.state || 'unknown')) as keyof typeof t]}</span>
+                <div className="flex items-center gap-0.5">
                   {/* 单个同步按钮 */}
                   <button 
                     onClick={(e) => { e.stopPropagation(); handleSyncSingle(domain.id); }} 
