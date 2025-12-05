@@ -1,0 +1,93 @@
+{
+  "providers": [],
+  "servers": [],
+  "domains": [
+    {
+      "id": "dom-1764742588843",
+      "name": "zuiku.me",
+      "registrar": "",
+      "dnsProvider": "",
+      "expirationDate": "9999-01-01",
+      "autoRenew": true,
+      "records": [
+        {
+          "id": "rec-1764742638253-0",
+          "type": "A",
+          "name": "zuiku.me",
+          "value": "47.76.252.105",
+          "ttl": 600
+        },
+        {
+          "id": "rec-1764742638253-1",
+          "type": "MX",
+          "name": "zuiku.me",
+          "value": "5 hzmx01.mxmail.netease.com.",
+          "ttl": 600
+        },
+        {
+          "id": "rec-1764742638253-2",
+          "type": "MX",
+          "name": "zuiku.me",
+          "value": "10 hzmx02.mxmail.netease.com.",
+          "ttl": 600
+        },
+        {
+          "id": "rec-1764742638253-3",
+          "type": "TXT",
+          "name": "zuiku.me",
+          "value": "\"v=spf1 include:spf.163.com -all\"",
+          "ttl": 600
+        },
+        {
+          "id": "rec-1764742638253-4",
+          "type": "NS",
+          "name": "zuiku.me",
+          "value": "dns10.hichina.com.",
+          "ttl": 86400
+        },
+        {
+          "id": "rec-1764742638253-5",
+          "type": "NS",
+          "name": "zuiku.me",
+          "value": "dns9.hichina.com.",
+          "ttl": 86400
+        }
+      ],
+      "status": null,
+      "state": "normal"
+    }
+  ],
+  "settings": {
+    "dnsApiProvider": "cloudflare",
+    "dnsFailover": true,
+    "whoisApiBaseUrl": "https://api.whoisproxy.info/whois",
+    "whoisApiKey": "",
+    "whoisApiMethod": "POST",
+    "serverAutoCheckEnabled": false,
+    "serverAutoCheckIntervalHours": 6,
+    "domainAutoCheckEnabled": false,
+    "domainAutoCheckFrequency": "daily",
+    "serverAutoCheckLastAt": 0,
+    "domainAutoCheckLastAt": 0,
+    "notifications": {
+      "bark": {
+        "enabled": false,
+        "serverUrl": "https://api.day.app",
+        "key": ""
+      },
+      "smtp": {
+        "enabled": false,
+        "host": "smtp.gmail.com",
+        "port": 587,
+        "username": "",
+        "password": "",
+        "fromEmail": ""
+      },
+      "preferences": {
+        "notifyServerDown": true,
+        "notifyDomainExpiring": true
+      }
+    },
+    "actionButtonsLayout": "floating"
+  }
+}

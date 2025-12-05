@@ -1,0 +1,1113 @@
+{
+  "providers": [
+    {
+      "id": "prov-1764889430227",
+      "name": "eqwe",
+      "loginUrl": "",
+      "username": "",
+      "categories": [
+        "server"
+      ],
+      "paymentMethod": "Other",
+      "paymentAccount": "",
+      "sortOrder": 0
+    },
+    {
+      "id": "prov-1764721113349",
+      "name": "google",
+      "loginUrl": "http://google.com",
+      "username": "123",
+      "password": "enc:gcm:BfcoRgDXsSjDzCb2:oR6cIq54cYOb1iwe7VZBTw==:GhsD",
+      "categories": [
+        "server",
+        "domain"
+      ],
+      "paymentMethod": "Other",
+      "paymentAccount": "",
+      "hasPassword": true,
+      "sortOrder": 0
+    },
+    {
+      "id": "prov-1764702595955",
+      "name": "alibaba",
+      "loginUrl": "http://alibaba.com",
+      "username": "123",
+      "password": "",
+      "categories": [
+        "server",
+        "domain"
+      ],
+      "paymentMethod": "CreditCard",
+      "paymentAccount": "11111",
+      "hasPassword": false,
+      "sortOrder": 1
+    },
+    {
+      "id": "prov-1764889730435",
+      "name": "haha",
+      "loginUrl": "",
+      "username": "",
+      "categories": [
+        "server"
+      ],
+      "paymentMethod": "Other",
+      "paymentAccount": "",
+      "createdAt": 1764889730435,
+      "sortOrder": 2
+    }
+  ],
+  "servers": [
+    {
+      "id": "srv-1764702433375",
+      "name": "alibaba",
+      "ip": "47.76.252.105",
+      "provider": "alibaba",
+      "region": "hk",
+      "os": "centos",
+      "status": "running",
+      "expirationDate": "2027-06-03",
+      "cpu": "2",
+      "ram": "4",
+      "disk": "",
+      "sshPort": "22",
+      "sshUsername": "root",
+      "sshPassword": "enc:gcm:NqMbIkYXj98aKi2R:oXoLYW1kVeg3ylZa3fKAnw==:1flwWt1X0UXfFQ==",
+      "panelUrl": "http://47.76.252.105/zuiku",
+      "username": "zuiku",
+      "password": "",
+      "notes": "aliyun\naliyun\naliyunaliyunaliyun\naliyun",
+      "providerUrl": "http://alibaba.com",
+      "providerUsername": "admin",
+      "providerPassword": "",
+      "providerNotes": "aliyun\naliyun\naliyunaliyunaliyun\naliyunaliyun\naliyun\naliyunaliyunaliyun\naliyun\naliyun\naliyun\naliyunaliyunaliyun\naliyunaliyun\naliyun\naliyunaliyunaliyun\naliyunaliyun\naliyun\naliyunaliyunaliyun\naliyun",
+      "hasPassword": false,
+      "hasSshPassword": true,
+      "hasProviderPassword": false,
+      "lastPingMs": 55,
+      "providerId": "prov-1764702595955",
+      "sortOrder": 1
+    },
+    {
+      "id": "srv-enc-test-3",
+      "name": "encTest3-up",
+      "ip": "10.0.0.3",
+      "provider": "test",
+      "status": "stopped",
+      "sshPort": "22",
+      "sshUsername": "root",
+      "password": "enc:gcm:Wxs/t2zRYvrm6g1E:UUmdpreaN9F87zpAr+OP8A==:Z71FYCn6QQ==",
+      "sshPassword": "enc:gcm:6flPAK1uHXNZTNsu:V35JabhTduy2M71VXGm2GQ==:PbP1hUtYiXM=",
+      "providerPassword": "enc:gcm:IgqENscE72AdTt2y:28fBAj+pYksYsiW57DpIVA==:yaR93ms7FQ==",
+      "hasPassword": true,
+      "hasSshPassword": true,
+      "hasProviderPassword": true,
+      "lastPingMs": null,
+      "sortOrder": 0
+    },
+    {
+      "id": "srv-1764705280571",
+      "name": "123",
+      "ip": "47.76.252.105",
+      "provider": "google",
+      "region": "hk",
+      "os": "ubuntu",
+      "status": "running",
+      "expirationDate": "2025-12-26",
+      "cpu": "2",
+      "ram": "4",
+      "disk": "",
+      "sshPort": "22",
+      "sshUsername": "root",
+      "providerId": "prov-1764721113349",
+      "providerUrl": "",
+      "providerUsername": "",
+      "providerPassword": "",
+      "providerNotes": "123243",
+      "notes": "47.76.252.10547.76.252.10547.76.252.105\n47.76.252.105",
+      "password": "",
+      "hasPassword": false,
+      "hasSshPassword": true,
+      "hasProviderPassword": false,
+      "lastPingMs": 56,
+      "sshPassword": "enc:gcm:qT+RCNPwXKPt1XOH:tZD1tCLBJpdpI9ZEkdyjxw==:uDd12f6Fduk67A==",
+      "sortOrder": 2
+    },
+    {
+      "id": "srv-enc-test",
+      "name": "encTest",
+      "ip": "baidu.com",
+      "provider": "test",
+      "region": "",
+      "os": "",
+      "status": "running",
+      "expirationDate": "",
+      "cpu": "",
+      "ram": "",
+      "disk": "",
+      "sshPort": "22",
+      "sshUsername": "root",
+      "password": "",
+      "sshPassword": "",
+      "providerPassword": "",
+      "lastPingMs": 110,
+      "hasPassword": false,
+      "hasSshPassword": false,
+      "hasProviderPassword": false,
+      "sortOrder": 3
+    },
+    {
+      "id": "srv-enc-test-2",
+      "name": "encTest2-keep",
+      "ip": "10.0.0.2",
+      "provider": "test",
+      "status": "stopped",
+      "sshPort": "22",
+      "sshUsername": "root",
+      "hasPassword": false,
+      "hasSshPassword": false,
+      "hasProviderPassword": false,
+      "lastPingMs": null,
+      "sortOrder": 4
+    },
+    {
+      "id": "srv-1764891784374",
+      "name": "999",
+      "ip": "192",
+      "provider": "",
+      "region": "",
+      "os": "",
+      "status": "running",
+      "expirationDate": "",
+      "cpu": "",
+      "ram": "",
+      "disk": "",
+      "sshPort": "22",
+      "sshUsername": "root",
+      "createdAt": 1764891784374,
+      "sortOrder": 7,
+      "hasPassword": false,
+      "hasSshPassword": false,
+      "hasProviderPassword": false
+    }
+  ],
+  "domains": [
+    {
+      "id": "dom-1764891760117",
+      "name": "09999",
+      "registrar": "",
+      "dnsProvider": "",
+      "expirationDate": "",
+      "autoRenew": true,
+      "records": [],
+      "createdAt": 1764891760117,
+      "sortOrder": 12
+    },
+    {
+      "id": "dom-1764891768085",
+      "name": "9999",
+      "registrar": "",
+      "dnsProvider": "",
+      "expirationDate": "",
+      "autoRenew": true,
+      "records": [],
+      "createdAt": 1764891768085,
+      "sortOrder": 13
+    },
+    {
+      "id": "dom-1764889367361",
+      "name": "77777",
+      "registrar": "",
+      "dnsProvider": "",
+      "expirationDate": "",
+      "autoRenew": true,
+      "records": [],
+      "sortOrder": 0
+    },
+    {
+      "id": "dom-1764726602797",
+      "name": "two.com",
+      "registrar": "Cloudflare, Inc.",
+      "dnsProvider": "",
+      "expirationDate": "2026-01-11",
+      "autoRenew": true,
+      "records": [
+        {
+          "id": "rec-1764870305949-0",
+          "type": "A",
+          "name": "two.com",
+          "value": "172.67.208.15",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764870305949-1",
+          "type": "A",
+          "name": "two.com",
+          "value": "104.21.45.22",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764870305949-2",
+          "type": "AAAA",
+          "name": "two.com",
+          "value": "2606:4700:3030::6815:2d16",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764870305949-3",
+          "type": "AAAA",
+          "name": "two.com",
+          "value": "2606:4700:3032::ac43:d00f",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764870305949-4",
+          "type": "MX",
+          "name": "two.com",
+          "value": "73 route2.mx.cloudflare.net.",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764870305949-5",
+          "type": "MX",
+          "name": "two.com",
+          "value": "77 route3.mx.cloudflare.net.",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764870305949-6",
+          "type": "MX",
+          "name": "two.com",
+          "value": "21 route1.mx.cloudflare.net.",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764870305949-7",
+          "type": "NS",
+          "name": "two.com",
+          "value": "dan.ns.cloudflare.com.",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764870305949-8",
+          "type": "NS",
+          "name": "two.com",
+          "value": "hera.ns.cloudflare.com.",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764870305949-9",
+          "type": "TXT",
+          "name": "two.com",
+          "value": "\"v=spf1 include:_spf.mx.cloudflare.net ~all\"",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764870305949-10",
+          "type": "SOA",
+          "name": "two.com",
+          "value": "主NS: dan.ns.cloudflare.com., 管理邮箱: dns.cloudflare.com., 序列号: 2390236372",
+          "ttl": 10
+        }
+      ],
+      "status": [
+        "clientTransferProhibited"
+      ],
+      "state": "normal",
+      "daysRemaining": 37,
+      "nameServers": [
+        "dan.ns.cloudflare.com",
+        "hera.ns.cloudflare.com",
+        "dan.ns.cloudflare.com",
+        "hera.ns.cloudflare.com"
+      ],
+      "lastSyncAt": 1764870305949,
+      "lastSyncError": null,
+      "sortOrder": 2
+    },
+    {
+      "id": "dom-1764709845582",
+      "name": "clot.vip",
+      "registrar": "",
+      "dnsProvider": "",
+      "expirationDate": "2022-01-01",
+      "autoRenew": true,
+      "records": [],
+      "state": "no_dns",
+      "status": null,
+      "sortOrder": 3
+    },
+    {
+      "id": "dom-1764707574973",
+      "name": "ai.com",
+      "registrar": "GoDaddy.com, LLC",
+      "dnsProvider": "",
+      "expirationDate": "2034-05-05",
+      "autoRenew": true,
+      "records": [
+        {
+          "id": "rec-1764887015044-0",
+          "type": "A",
+          "name": "ai.com",
+          "value": "104.26.15.34",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764887015044-1",
+          "type": "A",
+          "name": "ai.com",
+          "value": "172.67.70.15",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764887015044-2",
+          "type": "A",
+          "name": "ai.com",
+          "value": "104.26.14.34",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764887015044-3",
+          "type": "AAAA",
+          "name": "ai.com",
+          "value": "2606:4700:20::681a:e22",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764887015044-4",
+          "type": "AAAA",
+          "name": "ai.com",
+          "value": "2606:4700:20::681a:f22",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764887015044-5",
+          "type": "AAAA",
+          "name": "ai.com",
+          "value": "2606:4700:20::ac43:460f",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764887015044-6",
+          "type": "MX",
+          "name": "ai.com",
+          "value": "1 smtp.google.com.",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764887015044-7",
+          "type": "NS",
+          "name": "ai.com",
+          "value": "leonidas.ns.cloudflare.com.",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764887015044-8",
+          "type": "NS",
+          "name": "ai.com",
+          "value": "venus.ns.cloudflare.com.",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764887015044-9",
+          "type": "TXT",
+          "name": "ai.com",
+          "value": "\"google-gws-recovery-domain-verification=58750821\"",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764887015044-10",
+          "type": "TXT",
+          "name": "ai.com",
+          "value": "\"google-site-verification=iTtCuIiaG-Gn6WAj_SbaKtvZxmv_HagQ8h0BokdrmOo\"",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764887015044-11",
+          "type": "TXT",
+          "name": "ai.com",
+          "value": "\"google-gws-recovery-domain-verification=58615002\"",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764887015044-12",
+          "type": "SOA",
+          "name": "ai.com",
+          "value": "主NS: leonidas.ns.cloudflare.com., 管理邮箱: dns.cloudflare.com., 序列号: 2389949208",
+          "ttl": 10
+        }
+      ],
+      "status": [
+        "clientDeleteProhibited",
+        "clientTransferProhibited",
+        "clientUpdateProhibited"
+      ],
+      "state": "normal",
+      "daysRemaining": 3073,
+      "nameServers": [
+        "leonidas.ns.cloudflare.com",
+        "venus.ns.cloudflare.com"
+      ],
+      "lastSyncAt": 1764887015044,
+      "lastSyncError": null,
+      "sortOrder": 1,
+      "disableAutoOverwrite": true
+    },
+    {
+      "id": "dom-1764706899964",
+      "name": "of.ci",
+      "registrar": "AFRIREGISTER",
+      "dnsProvider": "",
+      "expirationDate": "2026-06-20",
+      "autoRenew": false,
+      "records": [
+        {
+          "id": "rec-1764887013884-0",
+          "type": "A",
+          "name": "of.ci",
+          "value": "47.76.252.105",
+          "ttl": 10,
+          "linkedServerId": "srv-1764705280571"
+        },
+        {
+          "id": "rec-1764887013884-1",
+          "type": "MX",
+          "name": "of.ci",
+          "value": "1 mx.ym.163.com.",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764887013884-2",
+          "type": "NS",
+          "name": "of.ci",
+          "value": "ns1.alidns.com.",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764887013884-3",
+          "type": "NS",
+          "name": "of.ci",
+          "value": "ns2.alidns.com.",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764887013884-4",
+          "type": "TXT",
+          "name": "of.ci",
+          "value": "\"v=spf1 include:spf.163.com ~all\"",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764887013884-5",
+          "type": "TXT",
+          "name": "of.ci",
+          "value": "\"2017071000000031jzwwqtsoy4br9i0ifzjrps8d615t7d8yltdb7dgsw89pvvjk\"",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764887013884-6",
+          "type": "TXT",
+          "name": "of.ci",
+          "value": "\"20170710000000203inf5lzh2r3uxurolxfj5lq6gbpi8i0s16rso8qkiu4e4ngf\"",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764887013884-7",
+          "type": "SOA",
+          "name": "of.ci",
+          "value": "主NS: ns1.alidns.com., 管理邮箱: hostmaster.hichina.com., 序列号: 2025101713",
+          "ttl": 10
+        }
+      ],
+      "state": "normal",
+      "status": [
+        "active"
+      ],
+      "registrarProviderId": "prov-1764702595955",
+      "daysRemaining": 197,
+      "nameServers": [
+        "ns1.alidns.com",
+        "ns2.alidns.com"
+      ],
+      "lastSyncAt": 1764887013884,
+      "lastSyncError": null,
+      "sortOrder": 4
+    },
+    {
+      "id": "dom-1764707004511",
+      "name": "baidu.com",
+      "registrar": "MarkMonitor Information Technology (Shanghai) Co., Ltd.",
+      "dnsProvider": "",
+      "expirationDate": "2028-10-11",
+      "autoRenew": true,
+      "records": [
+        {
+          "id": "rec-1764888745821-0",
+          "type": "A",
+          "name": "baidu.com",
+          "value": "124.237.177.164",
+          "ttl": 6
+        },
+        {
+          "id": "rec-1764888745821-1",
+          "type": "A",
+          "name": "baidu.com",
+          "value": "110.242.74.102",
+          "ttl": 6
+        },
+        {
+          "id": "rec-1764888745821-2",
+          "type": "A",
+          "name": "baidu.com",
+          "value": "111.63.65.103",
+          "ttl": 6
+        },
+        {
+          "id": "rec-1764888745821-3",
+          "type": "A",
+          "name": "baidu.com",
+          "value": "111.63.65.247",
+          "ttl": 6
+        },
+        {
+          "id": "rec-1764888745821-4",
+          "type": "MX",
+          "name": "baidu.com",
+          "value": "20 mx.baidu.com.",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764888745821-5",
+          "type": "MX",
+          "name": "baidu.com",
+          "value": "10 mx.maillb.baidu.com.",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764888745821-6",
+          "type": "NS",
+          "name": "baidu.com",
+          "value": "ns2.baidu.com.",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764888745821-7",
+          "type": "NS",
+          "name": "baidu.com",
+          "value": "ns7.baidu.com.",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764888745821-8",
+          "type": "NS",
+          "name": "baidu.com",
+          "value": "ns4.baidu.com.",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764888745821-9",
+          "type": "NS",
+          "name": "baidu.com",
+          "value": "dns.baidu.com.",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764888745821-10",
+          "type": "NS",
+          "name": "baidu.com",
+          "value": "ns3.baidu.com.",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764888745821-11",
+          "type": "TXT",
+          "name": "baidu.com",
+          "value": "\"9279nznttl321bxp1j464rd9vpps246v\"",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764888745821-12",
+          "type": "TXT",
+          "name": "baidu.com",
+          "value": "\"_globalsign-domain-verification=qjb28W2jJSrWj04NHpB0CvgK9tle5JkOq-EcyWBgnE\"",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764888745821-13",
+          "type": "TXT",
+          "name": "baidu.com",
+          "value": "\"v=spf1 include:spf1.baidu.com include:spf2.baidu.com include:spf3.baidu.com include:spf4.baidu.com -all\"",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764888745821-14",
+          "type": "TXT",
+          "name": "baidu.com",
+          "value": "\"google-site-verification=GHb98-6msqyx_qqjGl5eRatD3QTHyVB6-xQ3gJB5UwM\"",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764888745821-15",
+          "type": "SOA",
+          "name": "baidu.com",
+          "value": "主NS: dns.baidu.com., 管理邮箱: sa.baidu.com., 序列号: 2012150417",
+          "ttl": 10
+        }
+      ],
+      "status": [
+        "clientDeleteProhibited",
+        "clientTransferProhibited",
+        "clientUpdateProhibited"
+      ],
+      "state": "normal",
+      "daysRemaining": 1041,
+      "nameServers": [
+        "ns1.baidu.com",
+        "ns2.baidu.com",
+        "ns3.baidu.com",
+        "ns4.baidu.com",
+        "ns7.baidu.com",
+        "ns3.baidu.com",
+        "ns1.baidu.com",
+        "ns2.baidu.com",
+        "ns7.baidu.com",
+        "ns4.baidu.com"
+      ],
+      "lastSyncAt": 1764888745821,
+      "lastSyncError": null,
+      "sortOrder": 5
+    },
+    {
+      "id": "dom-1764726560248",
+      "name": "one.com",
+      "registrar": "CSL Computer Service Langenbach GmbH d/b/a joker.com",
+      "dnsProvider": "",
+      "expirationDate": "2033-02-13",
+      "autoRenew": true,
+      "records": [
+        {
+          "id": "rec-1764868429296-0",
+          "type": "A",
+          "name": "one.com",
+          "value": "195.47.247.9",
+          "ttl": 1
+        },
+        {
+          "id": "rec-1764868429296-1",
+          "type": "A",
+          "name": "one.com",
+          "value": "195.47.247.8",
+          "ttl": 1
+        },
+        {
+          "id": "rec-1764868429296-2",
+          "type": "AAAA",
+          "name": "one.com",
+          "value": "2a02:2350:6::6514:e26d",
+          "ttl": 1
+        },
+        {
+          "id": "rec-1764868429296-3",
+          "type": "MX",
+          "name": "one.com",
+          "value": "10 mx3.pub.mailpod12-cph3.one.com.",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764868429296-4",
+          "type": "MX",
+          "name": "one.com",
+          "value": "10 mx4.pub.mailpod12-cph3.one.com.",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764868429296-5",
+          "type": "MX",
+          "name": "one.com",
+          "value": "10 mx1.pub.mailpod12-cph3.one.com.",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764868429296-6",
+          "type": "MX",
+          "name": "one.com",
+          "value": "10 mx2.pub.mailpod12-cph3.one.com.",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764868429296-7",
+          "type": "NS",
+          "name": "one.com",
+          "value": "auth.g1-dns.one.",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764868429296-8",
+          "type": "NS",
+          "name": "one.com",
+          "value": "auth.g1-dns.com.",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764868429296-9",
+          "type": "TXT",
+          "name": "one.com",
+          "value": "\"atlassian-domain-verification=KKeihQSanTHe0l1pqlAF48oghg9rSqxhRZakMd/Gq8e8xTF/maaW2agw60HZU5va\"",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764868429296-10",
+          "type": "TXT",
+          "name": "one.com",
+          "value": "\"status-page-domain-verification=jxn9sv5yjjk0\"",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764868429296-11",
+          "type": "TXT",
+          "name": "one.com",
+          "value": "\"0c2ce30eb74af62b8f39fe80d2821090\"",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764868429296-12",
+          "type": "TXT",
+          "name": "one.com",
+          "value": "\"apple-domain-verification=NW7F5wIbiIMoDyGn\"",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764868429296-13",
+          "type": "TXT",
+          "name": "one.com",
+          "value": "\"facebook-domain-verification=bzipsayq3fcwysb04sfrb7n28umr70\"",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764868429296-14",
+          "type": "TXT",
+          "name": "one.com",
+          "value": "\"MS=ms80165880\"",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764868429296-15",
+          "type": "TXT",
+          "name": "one.com",
+          "value": "\"google-site-verification=PxhP_oeeJYM6XtUKPbyWuAA4BSR1OgKY5Il_zMhZZ4g\"",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764868429296-16",
+          "type": "TXT",
+          "name": "one.com",
+          "value": "\"google-site-verification=SJnzgdADXmE_K3rQEbVVmYXgxa_0Auh5oDN4KBGp_n8\"",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764868429296-17",
+          "type": "TXT",
+          "name": "one.com",
+          "value": "\"slack-domain-verification=cKfMkGzW2T6D9IwrAfw3WqEMiCNY7Xsnd5cMo7VQ\"",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764868429296-18",
+          "type": "TXT",
+          "name": "one.com",
+          "value": "\"v=spf1 include:_spf.one.com include:spf.mail.intercom.io include:mail.zendesk.com include:spf.mandrillapp.com include:servers.mcsv.net include:spf.protection.outlook.de include:secure-mailgate.com ~all\"",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764868429296-19",
+          "type": "SOA",
+          "name": "one.com",
+          "value": "主NS: a.b-one-dns.net., 管理邮箱: hostmaster.one.com., 序列号: 2025120301",
+          "ttl": 10
+        }
+      ],
+      "status": [
+        "clientTransferProhibited"
+      ],
+      "state": "normal",
+      "daysRemaining": 2627,
+      "nameServers": [
+        "auth.g1-dns.com",
+        "auth.g1-dns.one",
+        "auth.g1-dns.com",
+        "auth.g1-dns.one"
+      ],
+      "lastSyncAt": 1764868429296,
+      "lastSyncError": null,
+      "sortOrder": 9
+    },
+    {
+      "id": "dom-1764708846208",
+      "name": "zuiku.me",
+      "registrar": "Alibaba Cloud Computing Ltd. d/b/a HiChina (www.net.cn)",
+      "dnsProvider": "",
+      "expirationDate": "2026-06-25",
+      "autoRenew": true,
+      "records": [
+        {
+          "id": "rec-1764868442886-0",
+          "type": "A",
+          "name": "zuiku.me",
+          "value": "47.76.252.105",
+          "ttl": 10,
+          "linkedServerId": "srv-1764705280571"
+        },
+        {
+          "id": "rec-1764868442886-1",
+          "type": "MX",
+          "name": "zuiku.me",
+          "value": "5 hzmx01.mxmail.netease.com.",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764868442886-2",
+          "type": "MX",
+          "name": "zuiku.me",
+          "value": "10 hzmx02.mxmail.netease.com.",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764868442886-3",
+          "type": "NS",
+          "name": "zuiku.me",
+          "value": "dns9.hichina.com.",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764868442886-4",
+          "type": "NS",
+          "name": "zuiku.me",
+          "value": "dns10.hichina.com.",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764868442886-5",
+          "type": "TXT",
+          "name": "zuiku.me",
+          "value": "\"v=spf1 include:spf.163.com -all\"",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764868442886-6",
+          "type": "SOA",
+          "name": "zuiku.me",
+          "value": "主NS: dns9.hichina.com., 管理邮箱: hostmaster.hichina.com., 序列号: 2025101713",
+          "ttl": 10
+        }
+      ],
+      "state": "normal",
+      "status": [
+        "active"
+      ],
+      "daysRemaining": 202,
+      "nameServers": [],
+      "lastSyncAt": 1764868442886,
+      "lastSyncError": null,
+      "sortOrder": 7
+    },
+    {
+      "id": "dom-1764889640636",
+      "name": "test-new-domain.com",
+      "registrar": "",
+      "dnsProvider": "",
+      "expirationDate": "",
+      "autoRenew": true,
+      "records": [],
+      "createdAt": 1764889640636,
+      "sortOrder": 9
+    },
+    {
+      "id": "dom-1764889692419",
+      "name": "ceshi",
+      "registrar": "",
+      "dnsProvider": "",
+      "expirationDate": "",
+      "autoRenew": true,
+      "records": [],
+      "createdAt": 1764889692419,
+      "sortOrder": 10
+    },
+    {
+      "id": "dom-1764702490810",
+      "name": "kou.im",
+      "registrar": "google",
+      "dnsProvider": "alibaba",
+      "expirationDate": "2027-07-31",
+      "autoRenew": false,
+      "records": [
+        {
+          "id": "rec-1764869179625-0",
+          "type": "A",
+          "name": "kou.im",
+          "value": "47.76.252.105",
+          "ttl": 10,
+          "linkedServerId": "srv-1764705280571"
+        },
+        {
+          "id": "rec-1764869179625-1",
+          "type": "MX",
+          "name": "kou.im",
+          "value": "10 alt3.aspmx.l.google.com.",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764869179625-2",
+          "type": "MX",
+          "name": "kou.im",
+          "value": "5 alt2.aspmx.l.google.com.",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764869179625-3",
+          "type": "MX",
+          "name": "kou.im",
+          "value": "5 alt1.aspmx.l.google.com.",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764869179625-4",
+          "type": "MX",
+          "name": "kou.im",
+          "value": "1 aspmx.l.google.com.",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764869179625-5",
+          "type": "MX",
+          "name": "kou.im",
+          "value": "10 alt4.aspmx.l.google.com.",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764869179625-6",
+          "type": "NS",
+          "name": "kou.im",
+          "value": "ns1.alidns.com.",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764869179625-7",
+          "type": "NS",
+          "name": "kou.im",
+          "value": "ns2.alidns.com.",
+          "ttl": 10
+        },
+        {
+          "id": "rec-1764869179625-8",
+          "type": "SOA",
+          "name": "kou.im",
+          "value": "主NS: ns1.alidns.com., 管理邮箱: hostmaster.hichina.com., 序列号: 2025101713",
+          "ttl": 10
+        }
+      ],
+      "state": "normal",
+      "status": [],
+      "registrarProviderId": "prov-1764721113349",
+      "dnsProviderId": "prov-1764702595955",
+      "daysRemaining": 603,
+      "nameServers": [
+        "ns1.alidns.com.",
+        "ns2.alidns.com."
+      ],
+      "lastSyncAt": 1764869179626,
+      "lastSyncError": null,
+      "disableAutoOverwrite": true,
+      "sortOrder": 6
+    },
+    {
+      "id": "dom-1764892204454",
+      "name": "whole-row-highlight.com",
+      "registrar": "",
+      "dnsProvider": "",
+      "expirationDate": "",
+      "autoRenew": true,
+      "records": [],
+      "createdAt": 1764892204454,
+      "sortOrder": 12
+    },
+    {
+      "id": "dom-1764726639487",
+      "name": "ai.ink",
+      "registrar": "Chengdu west dimension digital technology Co., LTD",
+      "dnsProvider": "",
+      "expirationDate": "2026-12-03",
+      "autoRenew": true,
+      "records": [
+        {
+          "id": "rec-1764888772334-0",
+          "type": "A",
+          "name": "ai.ink",
+          "value": "103.120.80.111",
+          "ttl": 10
+        }
+      ],
+      "status": [
+        "active"
+      ],
+      "state": "normal",
+      "daysRemaining": 363,
+      "nameServers": [
+        "ns1-show.myhostadmin.net",
+        "ns2-show.myhostadmin.net"
+      ],
+      "lastSyncAt": 1764888772334,
+      "lastSyncError": null,
+      "sortOrder": 8
+    }
+  ],
+  "settings": {
+    "whoisApiEnabled": true,
+    "whoisApiBaseUrl": "http://whois.of.ci/api",
+    "whoisApiKey": "enc:gcm:DdfNvspf41w1sASx:WrnqgxPkQ1d5jRc7yKpgVQ==:s4IPGzl6KdK+mTpZwr8Su9AZktzrHOZZcwyWT1dh0kasHLhQTUauI8vpF0sOUWUTzU2xXVHstWSLOGO/Bmn28w==",
+    "dnsApiProvider": "cloudflare",
+    "dnsFailover": true,
+    "rdapProvider": "auto",
+    "rdapFailover": true,
+    "whoisPriority": "whois_first",
+    "notifications": {
+      "bark": {
+        "enabled": false,
+        "serverUrl": "https://api.day.app",
+        "key": "",
+        "hasKey": true
+      },
+      "smtp": {
+        "enabled": false,
+        "host": "smtp.163.com",
+        "port": 25,
+        "username": "lilvan666@163.com",
+        "password": "",
+        "fromEmail": "lilvan666@163.com",
+        "secure": false,
+        "requireTLS": true,
+        "hasPassword": true
+      },
+      "preferences": {
+        "notifyServerDown": true,
+        "notifyDomainExpiring": true
+      }
+    },
+    "whoisApiMethod": "POST",
+    "serverAutoCheckEnabled": true,
+    "serverAutoCheckIntervalHours": 1,
+    "domainAutoCheckEnabled": true,
+    "domainAutoCheckFrequency": "daily",
+    "domainAutoCheckLastAt": 1764829005131,
+    "serverAutoCheckLastAt": 1764891529121,
+    "actionButtonsLayout": "floating",
+    "hasWhoisApiKey": true,
+    "whoisApiHeaders": {
+      "x-rapidapi-key": "<你的key>",
+      "x-rapidapi-host": "whois-api6.p.rapidapi.com",
+      "Content-Type": "application/json"
+    },
+    "whoisApiBody": "{\"query\":\"{{domain}}\"}",
+    "whoisApiProvider": "rapidapi_getData",
+    "_whoisKeyVisible": false,
+    "listViewMode": "table"
+  }
+}

@@ -1,0 +1,191 @@
+{
+  "providers": [],
+  "servers": [],
+  "domains": [
+    {
+      "id": "dom1",
+      "name": "google.com",
+      "registrar": "MarkMonitor",
+      "dnsProvider": "Cloudflare",
+      "autoRenew": false,
+      "records": [
+        {
+          "id": "rec-1764795458301-0",
+          "type": "A",
+          "name": "google.com",
+          "value": "142.250.77.174",
+          "ttl": 173
+        },
+        {
+          "id": "rec-1764795458301-1",
+          "type": "AAAA",
+          "name": "google.com",
+          "value": "2404:6800:4004:825::200e",
+          "ttl": 131
+        },
+        {
+          "id": "rec-1764795458301-2",
+          "type": "MX",
+          "name": "google.com",
+          "value": "10 smtp.google.com.",
+          "ttl": 300
+        },
+        {
+          "id": "rec-1764795458301-3",
+          "type": "TXT",
+          "name": "google.com",
+          "value": "\"google-site-verification=TV9-DBe4R80X4v0M4U_bd_J9cpOJM0nikft0jAgjmsQ\"",
+          "ttl": 3600
+        },
+        {
+          "id": "rec-1764795458301-4",
+          "type": "TXT",
+          "name": "google.com",
+          "value": "\"cisco-ci-domain-verification=47c38bc8c4b74b7233e9053220c1bbe76bcc1cd33c7acf7acd36cd6a5332004b\"",
+          "ttl": 3600
+        },
+        {
+          "id": "rec-1764795458301-5",
+          "type": "TXT",
+          "name": "google.com",
+          "value": "\"apple-domain-verification=30afIBcvSuDV2PLX\"",
+          "ttl": 3600
+        },
+        {
+          "id": "rec-1764795458301-6",
+          "type": "TXT",
+          "name": "google.com",
+          "value": "\"onetrust-domain-verification=de01ed21f2fa4d8781cbc3ffb89cf4ef\"",
+          "ttl": 3600
+        },
+        {
+          "id": "rec-1764795458301-7",
+          "type": "TXT",
+          "name": "google.com",
+          "value": "\"globalsign-smime-dv=CDYX+XFHUw2wml6/Gb8+59BsH31KzUr6c1l2BPvqKX8=\"",
+          "ttl": 3600
+        },
+        {
+          "id": "rec-1764795458301-8",
+          "type": "TXT",
+          "name": "google.com",
+          "value": "\"facebook-domain-verification=22rm551cu4k0ab0bxsw536tlds4h95\"",
+          "ttl": 3600
+        },
+        {
+          "id": "rec-1764795458301-9",
+          "type": "TXT",
+          "name": "google.com",
+          "value": "\"docusign=1b0a6754-49b1-4db5-8540-d2c12664b289\"",
+          "ttl": 3600
+        },
+        {
+          "id": "rec-1764795458301-10",
+          "type": "TXT",
+          "name": "google.com",
+          "value": "\"google-site-verification=4ibFUgB-wXLQ_S7vsXVomSTVamuOXBiVAzpR5IZ87D0\"",
+          "ttl": 3600
+        },
+        {
+          "id": "rec-1764795458301-11",
+          "type": "TXT",
+          "name": "google.com",
+          "value": "\"docusign=05958488-4752-4ef2-95eb-aa7ba8a3bd0e\"",
+          "ttl": 3600
+        },
+        {
+          "id": "rec-1764795458301-12",
+          "type": "TXT",
+          "name": "google.com",
+          "value": "\"MS=E4A68B9AB2BB9670BCE15412F62916164C0B20BB\"",
+          "ttl": 3600
+        },
+        {
+          "id": "rec-1764795458301-13",
+          "type": "TXT",
+          "name": "google.com",
+          "value": "\"v=spf1 include:_spf.google.com ~all\"",
+          "ttl": 3600
+        },
+        {
+          "id": "rec-1764795458301-14",
+          "type": "TXT",
+          "name": "google.com",
+          "value": "\"google-site-verification=wD8N7i1JTNTkezJ49swvWW48f8_9xveREV4oB-0Hf5o\"",
+          "ttl": 3600
+        },
+        {
+          "id": "rec-1764795458301-15",
+          "type": "NS",
+          "name": "google.com",
+          "value": "ns3.google.com.",
+          "ttl": 336822
+        },
+        {
+          "id": "rec-1764795458301-16",
+          "type": "NS",
+          "name": "google.com",
+          "value": "ns4.google.com.",
+          "ttl": 336822
+        },
+        {
+          "id": "rec-1764795458301-17",
+          "type": "NS",
+          "name": "google.com",
+          "value": "ns1.google.com.",
+          "ttl": 336822
+        },
+        {
+          "id": "rec-1764795458301-18",
+          "type": "NS",
+          "name": "google.com",
+          "value": "ns2.google.com.",
+          "ttl": 336822
+        }
+      ],
+      "expirationDate": "2028-09-13",
+      "status": [
+        "active"
+      ],
+      "state": "normal"
+    },
+    {
+      "id": "ofci1",
+      "name": "google.com",
+      "registrar": "MarkMonitor",
+      "dnsProvider": "ofci",
+      "autoRenew": false,
+      "records": []
+    }
+  ],
+  "settings": {
+    "dnsApiProvider": "cloudflare",
+    "dnsFailover": true,
+    "whoisApiProvider": "rapidapi_getData",
+    "whoisApiBaseUrl": "http://whois.of.ci/api",
+    "whoisApiKey": "enc:gcm:FYzmTdS91sPhbTN1:mqImhZGIspurqWQrsDYS4w==:JmzIXdKXuJcn5qjs3gkeaBQoRC5N27enRHVj++Dx8X/awfwPPn46WEYz9qHfDaFrqeB/gi7GVf9fmmdU2NFKsw==",
+    "whoisApiMethod": "GET",
+    "serverAutoCheckEnabled": false,
+    "serverAutoCheckIntervalHours": 6,
+    "domainAutoCheckEnabled": false,
+    "domainAutoCheckFrequency": "daily",
+    "serverAutoCheckLastAt": 0,
+    "domainAutoCheckLastAt": 0,
+    "notifications": {
+      "bark": {
+        "enabled": false,
+        "serverUrl": "https://api.day.app",
+        "key": ""
+      },
+      "smtp": {
+        "enabled": false,
+        "host": "smtp.gmail.com",
+        "port": 587,
+        "username": "",
+        "password": "",
+        "fromEmail": ""
+      }
+    },
+    "whoisApiHeaders": {}
+  }
+}

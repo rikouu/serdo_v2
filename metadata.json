@@ -1,0 +1,5 @@
+{
+  "name": "Serdo",
+  "description": "A centralized dashboard to manage scattered servers, domains, DNS records, and credentials across multiple providers with AI-powered infrastructure auditing.",
+  "requestFramePermissions": []
+}

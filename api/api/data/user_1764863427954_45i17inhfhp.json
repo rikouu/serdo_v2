@@ -1,0 +1,151 @@
+{
+  "providers": [],
+  "servers": [],
+  "domains": [
+    {
+      "id": "dom1",
+      "name": "example.com",
+      "records": [
+        {
+          "type": "A",
+          "name": "example.com",
+          "value": "23.215.0.136",
+          "ttl": 9
+        },
+        {
+          "type": "A",
+          "name": "example.com",
+          "value": "23.220.75.232",
+          "ttl": 9
+        },
+        {
+          "type": "A",
+          "name": "example.com",
+          "value": "23.220.75.245",
+          "ttl": 9
+        },
+        {
+          "type": "A",
+          "name": "example.com",
+          "value": "23.215.0.138",
+          "ttl": 9
+        },
+        {
+          "type": "A",
+          "name": "example.com",
+          "value": "23.192.228.84",
+          "ttl": 9
+        },
+        {
+          "type": "A",
+          "name": "example.com",
+          "value": "23.192.228.80",
+          "ttl": 9
+        },
+        {
+          "type": "AAAA",
+          "name": "example.com",
+          "value": "2600:1408:ec00:36::1736:7f31",
+          "ttl": 9
+        },
+        {
+          "type": "AAAA",
+          "name": "example.com",
+          "value": "2600:1408:ec00:36::1736:7f24",
+          "ttl": 9
+        },
+        {
+          "type": "AAAA",
+          "name": "example.com",
+          "value": "2600:1406:bc00:53::b81e:94ce",
+          "ttl": 9
+        },
+        {
+          "type": "AAAA",
+          "name": "example.com",
+          "value": "2600:1406:5e00:6::17ce:bc1b",
+          "ttl": 9
+        },
+        {
+          "type": "AAAA",
+          "name": "example.com",
+          "value": "2600:1406:bc00:53::b81e:94c8",
+          "ttl": 9
+        },
+        {
+          "type": "AAAA",
+          "name": "example.com",
+          "value": "2600:1406:5e00:6::17ce:bc12",
+          "ttl": 9
+        },
+        {
+          "type": "MX",
+          "name": "example.com",
+          "value": "0 .",
+          "ttl": 10
+        },
+        {
+          "type": "NS",
+          "name": "example.com",
+          "value": "b.iana-servers.net.",
+          "ttl": 10
+        },
+        {
+          "type": "NS",
+          "name": "example.com",
+          "value": "a.iana-servers.net.",
+          "ttl": 10
+        },
+        {
+          "type": "TXT",
+          "name": "example.com",
+          "value": "\"_k2n1y4vw3qtb4skdx9e7dxt97qrmmq9\"",
+          "ttl": 10
+        },
+        {
+          "type": "TXT",
+          "name": "example.com",
+          "value": "\"v=spf1 -all\"",
+          "ttl": 10
+        },
+        {
+          "type": "SOA",
+          "name": "example.com",
+          "value": "主NS: ns.icann.org., 管理邮箱: noc.dns.icann.org., 序列号: 2025111921",
+          "ttl": 10
+        }
+      ],
+      "expirationDate": "2026-08-13",
+      "status": [
+        "active"
+      ],
+      "state": "normal"
+    }
+  ],
+  "settings": {
+    "whoisApiBaseUrl": "http://whois.of.ci/api",
+    "whoisApiKey": "enc:gcm:4FLzB1U85bc9HJhe:dzoHjXJLRztVfhL/XJ69hg==:rhVXsbKvmzDTZvhY9Een5YExMO70F3PNROykoaTOMkXO3aH+mQbGDIAksS2PGt4Ht7q0pfjCS15Mbg0ADjQ3Fg==",
+    "whoisApiMethod": "GET",
+    "serverAutoCheckEnabled": false,
+    "serverAutoCheckIntervalHours": 6,
+    "domainAutoCheckEnabled": false,
+    "domainAutoCheckFrequency": "daily",
+    "serverAutoCheckLastAt": 0,
+    "domainAutoCheckLastAt": 0,
+    "notifications": {
+      "bark": {
+        "enabled": false,
+        "serverUrl": "https://api.day.app",
+        "key": ""
+      },
+      "smtp": {
+        "enabled": false,
+        "host": "smtp.gmail.com",
+        "port": 587,
+        "username": "",
+        "password": "",
+        "fromEmail": ""
+      }
+    }
+  }
+}

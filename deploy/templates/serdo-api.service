@@ -1,0 +1,13 @@
+[Unit]
+Description=Serdo API Service
+After=network.target
+
+[Service]
+WorkingDirectory={{INSTALL_DIR}}/api
+ExecStart=/usr/bin/env AUTH_SECRET={{AUTH_SECRET}} PORT={{PORT}} node server.js
+Restart=always
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target
+

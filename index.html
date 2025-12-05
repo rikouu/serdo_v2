@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>InfraVault - Infrastructure Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      body { font-family: 'Inter', sans-serif; }
+      
+      /* Custom scrollbar for cleaner UI */
+      ::-webkit-scrollbar { width: 6px; height: 6px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+      ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+      
+      /* Unified input styles */
+      input[type="text"], input[type="email"], input[type="password"], 
+      input[type="url"], input[type="number"], input[type="date"],
+      textarea, select {
+        transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+      }
+      
+      input:focus, textarea:focus, select:focus {
+        outline: none;
+        border-color: #6366f1;
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+      }
+      
+      input:disabled, textarea:disabled, select:disabled {
+        background-color: #f8fafc;
+        cursor: not-allowed;
+        opacity: 0.7;
+      }
+      
+      /* Input placeholder styling */
+      ::placeholder {
+        color: #94a3b8;
+        opacity: 1;
+      }
+      
+      /* Button hover effects */
+      button {
+        transition: all 0.15s ease;
+      }
+      
+      button:active:not(:disabled) {
+        transform: scale(0.98);
+      }
+      
+      /* Card hover effects */
+      .card-hover {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+      
+      .card-hover:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+      }
+      
+      /* Smooth animations */
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      
+      @keyframes slideUp {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      
+      @keyframes scaleIn {
+        from { opacity: 0; transform: scale(0.95); }
+        to { opacity: 1; transform: scale(1); }
+      }
+      
+      @keyframes pulse-soft {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.7; }
+      }
+      
+      .animate-fade-in {
+        animation: fadeIn 0.3s ease-out;
+      }
+      
+      .animate-slide-up {
+        animation: slideUp 0.3s ease-out;
+      }
+      
+      .animate-scale-in {
+        animation: scaleIn 0.2s ease-out;
+      }
+      
+      .animate-pulse-soft {
+        animation: pulse-soft 2s ease-in-out infinite;
+      }
+      
+      /* Badge hover effects */
+      .badge-interactive {
+        cursor: pointer;
+        transition: transform 0.1s ease, box-shadow 0.1s ease;
+      }
+      
+      .badge-interactive:hover {
+        transform: scale(1.05);
+      }
+      
+      /* Truncate with ellipsis for long text */
+      .truncate-hover {
+        position: relative;
+      }
+      
+      .truncate-hover::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 20px;
+        background: linear-gradient(to right, transparent, white);
+        opacity: 0;
+        transition: opacity 0.2s;
+      }
+      
+      .truncate-hover:hover::after {
+        opacity: 1;
+      }
+      
+      /* Loading shimmer effect */
+      @keyframes shimmer {
+        0% { background-position: -200% 0; }
+        100% { background-position: 200% 0; }
+      }
+      
+      .shimmer {
+        background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+      }
+    </style>
+    <script type="module" src="/index.tsx"></script>
+  </head>
+  <body class="bg-slate-50 text-slate-900 antialiased">
+    <div id="root"></div>
+  </body>
+</html>

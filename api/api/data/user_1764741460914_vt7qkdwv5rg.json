@@ -1,0 +1,43 @@
+{
+  "providers": [],
+  "servers": [],
+  "domains": [
+    {
+      "id": "dom-1764741476702",
+      "name": "123",
+      "registrar": "",
+      "dnsProvider": "",
+      "expirationDate": "",
+      "autoRenew": true,
+      "records": []
+    }
+  ],
+  "settings": {
+    "dnsApiProvider": "cloudflare",
+    "dnsFailover": true,
+    "whoisApiBaseUrl": "https://api.whoisproxy.info/whois",
+    "whoisApiKey": "",
+    "whoisApiMethod": "POST",
+    "serverAutoCheckEnabled": false,
+    "serverAutoCheckIntervalHours": 6,
+    "domainAutoCheckEnabled": false,
+    "domainAutoCheckFrequency": "daily",
+    "serverAutoCheckLastAt": 0,
+    "domainAutoCheckLastAt": 0,
+    "notifications": {
+      "bark": {
+        "enabled": false,
+        "serverUrl": "https://api.day.app",
+        "key": ""
+      },
+      "smtp": {
+        "enabled": false,
+        "host": "smtp.gmail.com",
+        "port": 587,
+        "username": "",
+        "password": "",
+        "fromEmail": ""
+      }
+    }
+  }
+}

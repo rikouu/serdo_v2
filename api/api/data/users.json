@@ -1,0 +1,101 @@
+[
+  {
+    "id": "user_admin",
+    "username": "admin",
+    "email": "321@123.com",
+    "password": "6adeccc90d3d08228e3b9b769bbadc8a10342632f9f4a9c13d6afc29f61285f2",
+    "salt": "75f294466832b020c562c5c33b3dce6e"
+  },
+  {
+    "id": "user_1764741368863_hy2eg3ewxj9",
+    "username": "u_miplg2z1",
+    "email": "u_miplg2z1+updated@example.com",
+    "password": "384a48d044913f2282a9feb24a101b964f19bdc6e01ad866d518b9e5176714f0"
+  },
+  {
+    "id": "user_1764750466634_3taqbjv0yoo",
+    "username": "u_1764750466619",
+    "email": "u_1764750466619@example.com",
+    "password": "edf5fc6270a2dd5dba45f9ea3305fe292e77fdb0d6e21255661b599189f5564e",
+    "salt": "ad0eac098c9e4ca8209551d8fb768a7f"
+  },
+  {
+    "id": "user_1764751095447_1cu5n0gtolxi",
+    "username": "u_1764751095446",
+    "email": "u_1764751095446@example.com",
+    "password": "b1f9e5b42d8554ad2c9cd280478639c353269004c060a6876277865228c504a4",
+    "salt": "36e0560663923a477be14dfcb743dece"
+  },
+  {
+    "id": "user_1764751238792_dcedq3nsf77",
+    "username": "newnew",
+    "email": "new@new.com",
+    "password": "cc5f727df09cda91715367e8816b2f10ba07733fe461e864255fba656ef5014e",
+    "salt": "085ffab426f7019b9b90a99dc59cda9d"
+  },
+  {
+    "id": "user_1764751861973_g2952uyoos",
+    "username": "123",
+    "email": "123@33.qq",
+    "password": "78edfab35980bd281747eb9c9a25e7c2214013474756f8914f4ac5b7094120e3",
+    "salt": "4c27e92c06ec57743fad0caa1c13a4f7"
+  },
+  {
+    "id": "user_1764752037676_3gvhrv6wqzz",
+    "username": "admin6",
+    "email": "admin6@qq.com",
+    "password": "08e1a73e53f136ce25a0c816b81e8d0173c47b43aee9a895d0740227c1019056",
+    "salt": "cfb4fadb3ab9eb0e829875065a868b2f"
+  },
+  {
+    "id": "user_1764753592254_fslpd3mwh49",
+    "username": "666",
+    "email": "123@qq.com",
+    "password": "0dbc3de2c30b6030a37b5335b675de5dc2037e3ce9706cd7e9257e921c15c4f2",
+    "salt": "9f0c9f5dd7e2d798cd3fbd798985db27"
+  },
+  {
+    "id": "user_1764756459570_vj8oynwg4u",
+    "username": "hash",
+    "email": "hashtest@qq.com",
+    "password": "150e16048fee0390e41e5f81f38f65d59db75c9b719cb93c2434c83d5841f918",
+    "salt": "e9e93f7f8e2c88280a183afc37eb803e"
+  },
+  {
+    "id": "user_1764781657799_36pbgereh9",
+    "username": "invite",
+    "email": "invite@qq.com",
+    "password": "54fb07877547c325ccd3c1b0153a0bd814064b9223e268d3d2d501a330790b32",
+    "salt": "002150695ce25b041df51cb2bd3529ea",
+    "expiresAt": 1767168360000
+  },
+  {
+    "id": "user_1764782681805_f5jjmaf4tl",
+    "username": "invite2",
+    "email": "i@qq.com",
+    "password": "70b10b73f7062fa0eaa718b70e3171d3ea06ba30fed0e3a3ba4fbdcf3d43a5ee",
+    "salt": "1d7e84511421b73bfa5762a29236f0d4",
+    "expiresAt": 1767968640000
+  },
+  {
+    "id": "user_1764794832246_4vxc5hjvjln",
+    "username": "u3",
+    "email": "u3@example.com",
+    "password": "cb63790a54640d517831795e177f44a8887e36acc86ea9e5d505ea007b124872",
+    "salt": "99389570eb62c306f10ba8c271690cbd"
+  },
+  {
+    "id": "user_1764797231820_f7xeqdiab5j",
+    "username": "ra1",
+    "email": "ra1@example.com",
+    "password": "6e3f2408e671729e29e6c00c725ef2a2a08247d1c70eaf1772719059515c2940",
+    "salt": "d0d83202ee3697e8550fc86e2af35602"
+  },
+  {
+    "id": "user_1764863427954_45i17inhfhp",
+    "username": "tester",
+    "email": "tester@example.com",
+    "password": "c6e060136527f86e358165ec72ef64611bb9f67b7693a06dfc951272d5f92d7b",
+    "salt": "3305c6faa29bcc23064b9b59499b6054"
+  }
+]

@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  api:
+    build:
+      context: ./api
+    environment:
+      - PORT=4000
+    ports:
+      - "4000:4000"
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    ports:
+      - "3000:80"
+    depends_on:
+      - api

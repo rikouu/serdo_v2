@@ -1,0 +1,20 @@
+{
+  "name": "infravault-api",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js",
+    "build": "echo 'JS mode: no build'"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.10.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "nodemailer": "^6.9.13",
+    "ssh2": "^1.13.0",
+    "undici": "^6.20.1",
+    "ws": "^8.18.0"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "providers": [],
+  "servers": [],
+  "domains": [],
+  "settings": {
+    "dnsApiProvider": "cloudflare",
+    "dnsFailover": true,
+    "whoisApiProvider": "rapidapi_getData",
+    "whoisApiBaseUrl": "https://whois-api6.p.rapidapi.com/dns/api/v1/getRecords",
+    "whoisApiKey": "enc:gcm:HzWbGd4SG6lQC02o:9w0GeKMBBJFzA6KCnMAzgg==:4SJu73A11JJAkAYjpjoi6j7LwIjD2ph26JUk9/P3jzxJ/L0Q80NGh5R8VpA+OsUViwk=",
+    "whoisApiMethod": "POST",
+    "serverAutoCheckEnabled": false,
+    "serverAutoCheckIntervalHours": 6,
+    "domainAutoCheckEnabled": false,
+    "domainAutoCheckFrequency": "daily",
+    "serverAutoCheckLastAt": 0,
+    "domainAutoCheckLastAt": 0,
+    "notifications": {
+      "bark": {
+        "enabled": false,
+        "serverUrl": "https://api.day.app",
+        "key": ""
+      },
+      "smtp": {
+        "enabled": false,
+        "host": "smtp.gmail.com",
+        "port": 587,
+        "username": "",
+        "password": "",
+        "fromEmail": ""
+      }
+    },
+    "whoisApiHeaders": {}
+  }
+}
