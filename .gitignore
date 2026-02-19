@@ -50,3 +50,8 @@ api/data/*.db-*
 # Cursor specific
 .cursor/
 .cursorignore
+
+# Data files (nested)
+api/api/data/*.json
+api/api/data/*.db
+api/api/data/*.db-*
