@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Terminal as TerminalIcon, Minus, X, Maximize2, Minimize2, RefreshCw, Wifi, WifiOff, Loader, Info } from 'lucide-react';
+import { Terminal as TerminalIcon, Minus, X, Maximize2, Minimize2, RefreshCw, Wifi, WifiOff, Loader, Info, Send, ChevronUp, ChevronDown, Keyboard } from 'lucide-react';
 import { Terminal as XTerm } from 'xterm';
 import { FitAddon } from 'xterm-addon-fit';
 import 'xterm/css/xterm.css';
@@ -45,6 +45,13 @@ export const WebSSH: React.FC<WebSSHProps> = ({ server, onClose, isMinimized, on
   const [showShortcuts, setShowShortcuts] = useState(false);
   const [retryCount, setRetryCount]      = useState(0);
 
+  // 外部输入框
+  const [showExtInput, setShowExtInput]  = useState(true);  // 手机默认开
+  const [extInput, setExtInput]          = useState('');
+  const [cmdHistory, setCmdHistory]      = useState<string[]>([]);
+  const [historyIdx, setHistoryIdx]      = useState(-1);
+  const extInputRef = useRef<HTMLInputElement>(null);
+
   const termContainerRef = useRef<HTMLDivElement>(null);
   const wsRef   = useRef<WebSocket | null>(null);
   const termRef = useRef<XTerm | null>(null);
@@ -83,10 +90,41 @@ export const WebSSH: React.FC<WebSSHProps> = ({ server, onClose, isMinimized, on
         termRef.current?.focus();
       }
     } catch {
-      // 权限被拒：fallback 提示
       writeToTerm('\r\n\x1b[33m[粘贴失败：请允许浏览器访问剪贴板，或使用 Shift+Insert]\x1b[0m\r\n');
     }
   }, []);
+
+  // ── 外部输入框发送 ────────────────────────────────────────────────────────
+  const sendExtCommand = useCallback((cmd?: string) => {
+    const text = cmd ?? extInput;
+    if (!text || wsRef.current?.readyState !== WebSocket.OPEN) return;
+    wsRef.current.send(JSON.stringify({ type: 'input', data: text + '\r' }));
+    // 写入历史
+    setCmdHistory(prev => [text, ...prev.filter(h => h !== text)].slice(0, 50));
+    setHistoryIdx(-1);
+    setExtInput('');
+    termRef.current?.focus();
+  }, [extInput]);
+
+  const handleExtKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      sendExtCommand();
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setCmdHistory(prev => {
+        const next = Math.min(historyIdx + 1, prev.length - 1);
+        setHistoryIdx(next);
+        if (prev[next] !== undefined) setExtInput(prev[next]);
+        return prev;
+      });
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      const next = Math.max(historyIdx - 1, -1);
+      setHistoryIdx(next);
+      setExtInput(next === -1 ? '' : cmdHistory[next] ?? '');
+    }
+  }, [sendExtCommand, historyIdx, cmdHistory]);
 
   // ── init / reconnect ──────────────────────────────────────────────────────
   const connect = useCallback(() => {
@@ -378,6 +416,14 @@ export const WebSSH: React.FC<WebSSHProps> = ({ server, onClose, isMinimized, on
             >
               <Info className="w-4 h-4" />
             </button>
+            {/* 外部输入框开关 */}
+            <button
+              onClick={() => setShowExtInput(v => !v)}
+              className={`p-1.5 hover:bg-slate-800 rounded ${showExtInput ? 'text-emerald-400' : 'text-slate-400 hover:text-white'}`}
+              title={showExtInput ? '隐藏输入框' : '显示输入框（手机推荐）'}
+            >
+              <Keyboard className="w-4 h-4" />
+            </button>
             {/* 重连 */}
             {canReconnect && (
               <button
@@ -440,25 +486,83 @@ export const WebSSH: React.FC<WebSSHProps> = ({ server, onClose, isMinimized, on
           />
         </div>
 
-        {/* ── 底部快捷按钮（移动端友好） ── */}
-        <div className="bg-slate-900 border-t border-slate-800 px-2 py-1 flex gap-1 sm:hidden shrink-0">
-          {[
-            { label: 'Paste', action: pasteFromClipboard },
-            { label: 'Ctrl+C', action: () => wsRef.current?.send(JSON.stringify({ type: 'input', data: '\x03' })) },
-            { label: 'Ctrl+D', action: () => wsRef.current?.send(JSON.stringify({ type: 'input', data: '\x04' })) },
-            { label: 'Tab',    action: () => wsRef.current?.send(JSON.stringify({ type: 'input', data: '\t' })) },
-            { label: '↑',      action: () => wsRef.current?.send(JSON.stringify({ type: 'input', data: '\x1b[A' })) },
-            { label: '↓',      action: () => wsRef.current?.send(JSON.stringify({ type: 'input', data: '\x1b[B' })) },
-          ].map(btn => (
-            <button
-              key={btn.label}
-              onClick={btn.action}
-              className="px-2 py-1 text-xs bg-slate-800 text-slate-300 rounded hover:bg-slate-700 font-mono"
-            >
-              {btn.label}
-            </button>
-          ))}
-        </div>
+        {/* ── 外部输入框 ── */}
+        {showExtInput && (
+          <div className="bg-slate-900 border-t border-slate-800 px-2 py-1.5 shrink-0">
+            {/* 快捷键行 */}
+            <div className="flex gap-1 mb-1.5 overflow-x-auto scrollbar-none">
+              {[
+                { label: 'Tab',   data: '\t' },
+                { label: 'Esc',   data: '\x1b' },
+                { label: 'Ctrl+C',data: '\x03' },
+                { label: 'Ctrl+D',data: '\x04' },
+                { label: 'Ctrl+L',data: '\x0c' },
+                { label: 'Ctrl+Z',data: '\x1a' },
+                { label: '↑',     data: '\x1b[A' },
+                { label: '↓',     data: '\x1b[B' },
+                { label: '←',     data: '\x1b[D' },
+                { label: '→',     data: '\x1b[C' },
+              ].map(btn => (
+                <button
+                  key={btn.label}
+                  onPointerDown={e => {
+                    e.preventDefault(); // 不抢焦点
+                    if (wsRef.current?.readyState === WebSocket.OPEN) {
+                      wsRef.current.send(JSON.stringify({ type: 'input', data: btn.data }));
+                    }
+                  }}
+                  className="px-2.5 py-1 text-xs bg-slate-700 text-slate-200 rounded hover:bg-slate-600 font-mono whitespace-nowrap shrink-0"
+                >
+                  {btn.label}
+                </button>
+              ))}
+            </div>
+            {/* 输入行 */}
+            <div className="flex gap-1.5 items-center">
+              {/* 历史上 */}
+              <button
+                onPointerDown={e => { e.preventDefault(); handleExtKeyDown({ key: 'ArrowUp', preventDefault: () => {} } as any); }}
+                className="p-1.5 bg-slate-700 rounded text-slate-300 hover:bg-slate-600 shrink-0"
+                title="上一条命令"
+              ><ChevronUp className="w-4 h-4" /></button>
+              {/* 历史下 */}
+              <button
+                onPointerDown={e => { e.preventDefault(); handleExtKeyDown({ key: 'ArrowDown', preventDefault: () => {} } as any); }}
+                className="p-1.5 bg-slate-700 rounded text-slate-300 hover:bg-slate-600 shrink-0"
+                title="下一条命令"
+              ><ChevronDown className="w-4 h-4" /></button>
+              {/* 输入框 */}
+              <input
+                ref={extInputRef}
+                type="text"
+                value={extInput}
+                onChange={e => { setExtInput(e.target.value); setHistoryIdx(-1); }}
+                onKeyDown={handleExtKeyDown}
+                placeholder="在此输入命令，回车发送..."
+                className="flex-1 bg-slate-800 text-slate-100 placeholder-slate-500 border border-slate-700 rounded-lg px-3 py-1.5 text-sm font-mono focus:outline-none focus:border-emerald-500"
+                autoComplete="off"
+                autoCorrect="off"
+                autoCapitalize="off"
+                spellCheck={false}
+              />
+              {/* 粘贴 */}
+              <button
+                onPointerDown={e => { e.preventDefault(); pasteFromClipboard().then(() => extInputRef.current?.focus()); }}
+                className="px-2.5 py-1.5 bg-slate-700 text-slate-300 rounded-lg text-xs hover:bg-slate-600 shrink-0"
+                title="粘贴"
+              >📋</button>
+              {/* 发送 */}
+              <button
+                onClick={() => sendExtCommand()}
+                disabled={!extInput.trim()}
+                className="px-3 py-1.5 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-500 disabled:opacity-40 disabled:cursor-not-allowed shrink-0 flex items-center gap-1"
+              >
+                <Send className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">发送</span>
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* ── 右键菜单 ── */}
