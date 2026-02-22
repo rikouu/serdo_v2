@@ -1,0 +1,8 @@
+# 用户数据不打包进镜像（通过volume持久化）
+api/data/
+data/
+*.db
+*.db-*
+*.log
+node_modules/
+.DS_Store
