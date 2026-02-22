@@ -1084,6 +1084,20 @@ export const ServerList: React.FC<ServerListProps> = ({ servers, domains, provid
                          </button>
                        </div>
                     </div>
+                    {/* SSH Key */}
+                    <div className="space-y-1 md:col-span-2">
+                      <label className="text-xs font-semibold text-slate-500 uppercase">SSH 私钥（优先于密码）</label>
+                      <textarea
+                        rows={4}
+                        className="w-full bg-white text-slate-900 border border-slate-300 rounded-lg px-3 py-2 font-mono text-xs resize-y"
+                        value={editingServer.sshKey || ''}
+                        onChange={e => setEditingServer({...editingServer, sshKey: e.target.value})}
+                        placeholder="-----BEGIN OPENSSH PRIVATE KEY-----&#10;...&#10;-----END OPENSSH PRIVATE KEY-----"
+                        spellCheck={false}
+                        autoComplete="off"
+                      />
+                      <p className="text-[11px] text-slate-400">填写后 WebSSH 将优先使用 Key 认证。Key 明文存储，请知悉。</p>
+                    </div>
                   </div>
               </div>
 

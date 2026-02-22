@@ -44,6 +44,8 @@ export interface Server {
   sshPort?: string;
   sshUsername?: string;
   sshPassword?: string;
+  sshKey?: string;            // SSH 私钥内容（PEM格式）
+  sshKeyPassphrase?: string;  // 私钥密码（可选）
   sortOrder?: number; // 用于自定义排序
   createdAt?: number; // 创建时间戳
 
